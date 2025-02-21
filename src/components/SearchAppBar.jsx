@@ -18,9 +18,13 @@ import {
   CircularProgress,
   DialogActions,
 } from "@mui/material";
-import { Menu as MenuIcon, Search as SearchIcon, Close as CloseIcon } from "@mui/icons-material";
+import {
+  Menu as MenuIcon,
+  Search as SearchIcon,
+  Close as CloseIcon,
+} from "@mui/icons-material";
 import { useRouter } from "next/navigation";
-import { getUsername, logout } from "@/app/actions/checkAuth"; // ✅ Import authentication functions
+import { getUsername, logout } from "@/app/actions/checkAuth"; // ✅ Import logout function
 
 // Styled Components for Search Bar
 const Search = styled("div")(({ theme }) => ({
@@ -65,7 +69,7 @@ export default function SearchAppBar() {
   const [authenticated, setAuthenticated] = useState(false);
   const [username, setUsername] = useState("Invitado");
 
-  // ✅ Function to fetch username and authentication status
+  // ✅ Fetch authentication status and username
   async function fetchAuthStatus() {
     const auth = await getUsername();
     setLoading(false);
@@ -91,18 +95,11 @@ export default function SearchAppBar() {
     router.push(`/search?query=${encodedURL}`);
   };
 
-  // ✅ Handle Logout
+  // 🔹 Handle Logout
   const handleLogout = async () => {
-    await logout();
-    await fetchAuthStatus(); // ✅ Update state after logout
-    router.refresh();
+    await logout(); // ✅ Call logout action
+    router.refresh(); // ✅ Reload page to update state
     setOpen(false);
-  };
-
-  // ✅ Handle Login Success (Trigger State Update)
-  const handleLoginSuccess = async () => {
-    await fetchAuthStatus(); // ✅ Update state immediately after login
-    router.refresh(); // ✅ Force a refresh to reflect changes
   };
 
   // 🔹 Handle Menu Dialog Open/Close
@@ -114,7 +111,13 @@ export default function SearchAppBar() {
       <AppBar position="fixed">
         <Toolbar>
           {/* Menu Icon */}
-          <IconButton size="large" edge="start" color="inherit" sx={{ mr: 2 }} onClick={handleClickOpen}>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            sx={{ mr: 2 }}
+            onClick={handleClickOpen}
+          >
             <MenuIcon />
           </IconButton>
 
@@ -137,7 +140,11 @@ export default function SearchAppBar() {
                 onKeyUp={(e) => e.key === "Enter" && handleSearch()}
               />
             </Search>
-            <Button variant="text" sx={{ color: "white" }} onClick={handleSearch}>
+            <Button
+              variant="text"
+              sx={{ color: "white" }}
+              onClick={handleSearch}
+            >
               Buscar
             </Button>
           </Stack>
@@ -161,26 +168,41 @@ export default function SearchAppBar() {
             <CircularProgress />
           ) : authenticated ? (
             <>
-              <Typography variant="body1">En sesión como {username}.</Typography>
-              <Button variant="contained" color="secondary" sx={{ mt: 2 }} onClick={() => router.push("/dashboard")}>
+              <Typography variant="body1">
+                En sesión como {username}.
+              </Typography>
+              <Button
+                variant="contained"
+                color="secondary"
+                sx={{ mt: 2 }}
+                onClick={() => router.push("/dashboard")}
+              >
                 Ir al Dashboard
               </Button>
             </>
           ) : (
             <>
-              <Typography variant="body1">Inicia sesión o crea una cuenta para continuar.</Typography>
-              <Stack direction="row" justifyContent="center" spacing={2} sx={{ mt: 2 }}>
+              <Typography variant="body1">
+                Inicia sesión o crea una cuenta para continuar.
+              </Typography>
+              <Stack
+                direction="row"
+                justifyContent="center"
+                spacing={2}
+                sx={{ mt: 2 }}
+              >
                 <Button
                   variant="contained"
                   color="primary"
-                  onClick={() => {
-                    router.push("/login");
-                    handleLoginSuccess(); // ✅ Update username immediately after login
-                  }}
+                  onClick={() => router.push("/login")}
                 >
                   Login
                 </Button>
-                <Button variant="outlined" color="primary" onClick={() => router.push("/register")}>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  onClick={() => router.push("/register")}
+                >
                   Registrarse
                 </Button>
               </Stack>

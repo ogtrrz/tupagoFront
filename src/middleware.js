@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 export function middleware(request) {
   // ✅ Get cookies manually from headers (Edge runtime limitation)
-  console.log("Middleware 5");
+  // console.log("Middleware 5");
 
   const cookieHeader = request.headers.get("cookie");
   const authToken = cookieHeader
@@ -17,13 +17,13 @@ export function middleware(request) {
   if (
     protectedRoutes.some((route) => request.nextUrl.pathname.startsWith(route))
   ) {
-    console.log("Middleware 15");
+    // console.log("Middleware 15");
     if (!authToken) {
-      console.log("Middleware 16");
+      // console.log("Middleware 16");
       return NextResponse.redirect(new URL("/login", request.url));
     }
   }
-  console.log("Middleware 21");
+  // console.log("Middleware 21");
   return NextResponse.next();
 }
 

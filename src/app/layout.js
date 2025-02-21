@@ -6,6 +6,8 @@ import SearchAppBar from "@/components/SearchAppBar";
 import MyFooter from "@/components/MyFooter";
 // import { Box } from "@mui/material";
 import DynamicBreadcrumbs from "@/components/DynamicBreadcrumbs"; 
+import { AuthProvider } from "@/app/context/AuthContext";
+
 
 export const metadata = {
   title: "TuPago.click, CoDi pagos gratuitos.",
@@ -28,6 +30,7 @@ export default function RootLayout({ children }) {
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>
             <CssBaseline />
+            <AuthProvider>
             <SearchAppBar />
             <main style={{ paddingTop: "80px" }}>
               {" "}
@@ -36,6 +39,7 @@ export default function RootLayout({ children }) {
               {children}
             </main>
             <MyFooter />
+            </AuthProvider>
           </ThemeProvider>
         </AppRouterCacheProvider>
       </body>
