@@ -4,6 +4,8 @@ import { ThemeProvider } from "@mui/material/styles";
 import theme from "@/theme";
 import SearchAppBar from "@/components/SearchAppBar";
 import MyFooter from "@/components/MyFooter";
+// import { Box } from "@mui/material";
+import DynamicBreadcrumbs from "@/components/DynamicBreadcrumbs"; 
 
 export const metadata = {
   title: "TuPago.click, CoDi pagos gratuitos.",
@@ -27,7 +29,12 @@ export default function RootLayout({ children }) {
           <ThemeProvider theme={theme}>
             <CssBaseline />
             <SearchAppBar />
-            {children}
+            <main style={{ paddingTop: "80px" }}>
+              {" "}
+              {/* ✅ Prevent overlap */}
+              <DynamicBreadcrumbs /> {/* ✅ Show breadcrumbs */}
+              {children}
+            </main>
             <MyFooter />
           </ThemeProvider>
         </AppRouterCacheProvider>

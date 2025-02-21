@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   TextField,
   Button,
@@ -34,6 +34,13 @@ export default function MensajePagoQRForm() {
   const [qrData, setQrData] = useState(""); // Store response for QR
   const [dialogOpen, setDialogOpen] = useState(false); // Dialog state
   const router = useRouter(); // ✅ Router for redirection
+
+  // ✅ Ensure component is client-only to prevent hydration errors
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true); // ✅ Ensures this runs only in the browser
+  }, []);
 
   // ✅ Email validation regex pattern
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -96,6 +103,11 @@ export default function MensajePagoQRForm() {
     });
     setDialogOpen(false);
   };
+
+  // ✅ Prevent SSR rendering issues by checking if the component is mounted
+  if (!isClient) {
+    return null; // Avoid hydration mismatch
+  }
 
   return (
     <Box
@@ -207,7 +219,8 @@ export default function MensajePagoQRForm() {
             alignItems: "center",
           }}
         >
-          <QRCodeCanvas value={qrData || ""} size={248} level="L" />
+          {/* ✅ Ensure QR Code only renders on the client to prevent hydration issues */}
+          {qrData && <QRCodeCanvas value={qrData || ""} size={248} level="L" />}
         </DialogContent>
         <DialogActions>
           <Box

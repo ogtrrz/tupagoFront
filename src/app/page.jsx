@@ -20,28 +20,6 @@ import HomeIcon from "@mui/icons-material/Home";
 export default function HomePage() {
   return (
     <React.Fragment>
-      {/* Breadcrumb Navigation */}
-      <Box
-        sx={{
-          mt: { xs: 8, md: 10 },
-          px: 2,
-          display: "flex",
-          alignItems: "center",
-        }}
-      >
-        <Breadcrumbs
-          separator={<NavigateNextIcon fontSize="small" />}
-          aria-label="breadcrumb"
-        >
-          <Stack direction="row" alignItems="center" gap={1}>
-            <HomeIcon color="primary" />
-            <Typography variant="body1" color="text.primary">
-              Home
-            </Typography>
-          </Stack>
-        </Breadcrumbs>
-      </Box>
-
       {/* Hero / Header Section */}
       <Box sx={{ mt: 4 }}>
         <MyHeaderPrincipal
