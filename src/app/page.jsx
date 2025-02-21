@@ -5,17 +5,7 @@ import MyHeaderPrincipal from "@/components/MyHeaderPrincipal";
 import MediaCard from "@/components/MediaCard";
 import { data } from "@/lib/data";
 
-import {
-  Box,
-  Breadcrumbs,
-  Container,
-  Grid,
-  Stack,
-  Typography,
-} from "@mui/material";
-
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-import HomeIcon from "@mui/icons-material/Home";
+import { Box, Container, Grid } from "@mui/material";
 
 export default function HomePage() {
   return (

@@ -18,13 +18,9 @@ import {
   CircularProgress,
   DialogActions,
 } from "@mui/material";
-import {
-  Menu as MenuIcon,
-  Search as SearchIcon,
-  Close as CloseIcon,
-} from "@mui/icons-material";
+import { Menu as MenuIcon, Search as SearchIcon, Close as CloseIcon } from "@mui/icons-material";
 import { useRouter } from "next/navigation";
-import { getUsername, logout } from "@/app/actions/checkAuth"; // ✅ Import logout function
+import { getUsername, logout } from "@/app/actions/checkAuth"; // ✅ Import authentication functions
 
 // Styled Components for Search Bar
 const Search = styled("div")(({ theme }) => ({
@@ -69,7 +65,7 @@ export default function SearchAppBar() {
   const [authenticated, setAuthenticated] = useState(false);
   const [username, setUsername] = useState("Invitado");
 
-  // ✅ Fetch authentication status and username
+  // ✅ Function to fetch username and authentication status
   async function fetchAuthStatus() {
     const auth = await getUsername();
     setLoading(false);
@@ -87,6 +83,14 @@ export default function SearchAppBar() {
     fetchAuthStatus();
   }, []); // ✅ Runs only on mount
 
+  // 🔹 Handle Search Submission
+  const handleSearch = async () => {
+    if (search.length < 3) return;
+    const encodedURL = encodeURIComponent(search);
+    setSearch("");
+    router.push(`/search?query=${encodedURL}`);
+  };
+
   // ✅ Handle Logout
   const handleLogout = async () => {
     await logout();
@@ -98,15 +102,19 @@ export default function SearchAppBar() {
   // ✅ Handle Login Success (Trigger State Update)
   const handleLoginSuccess = async () => {
     await fetchAuthStatus(); // ✅ Update state immediately after login
-    router.refresh(); // ✅ Force a refresh to apply changes
+    router.refresh(); // ✅ Force a refresh to reflect changes
   };
+
+  // 🔹 Handle Menu Dialog Open/Close
+  const handleClickOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed">
         <Toolbar>
           {/* Menu Icon */}
-          <IconButton size="large" edge="start" color="inherit" sx={{ mr: 2 }}>
+          <IconButton size="large" edge="start" color="inherit" sx={{ mr: 2 }} onClick={handleClickOpen}>
             <MenuIcon />
           </IconButton>
 
@@ -114,22 +122,80 @@ export default function SearchAppBar() {
           <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
             Hola {username}
           </Typography>
+
+          {/* Search Bar */}
+          <Stack direction="row" alignItems="center" gap={1}>
+            <Search>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Buscar..."
+                inputProps={{ "aria-label": "search" }}
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                onKeyUp={(e) => e.key === "Enter" && handleSearch()}
+              />
+            </Search>
+            <Button variant="text" sx={{ color: "white" }} onClick={handleSearch}>
+              Buscar
+            </Button>
+          </Stack>
         </Toolbar>
       </AppBar>
 
-      {/* ✅ Add Login Success Call */}
-      {authenticated === false && (
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={async () => {
-            router.push("/login");
-            await handleLoginSuccess();
-          }}
+      {/* 🔹 Authentication Dialog */}
+      <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
+        <DialogTitle sx={{ backgroundColor: "primary.main", color: "white" }}>
+          {loading ? "Cargando..." : authenticated ? "User Menu" : "Bienvenido"}
+        </DialogTitle>
+        <IconButton
+          aria-label="close"
+          onClick={handleClose}
+          sx={{ position: "absolute", right: 8, top: 8, color: "white" }}
         >
-          Iniciar Sesión
-        </Button>
-      )}
+          <CloseIcon />
+        </IconButton>
+        <DialogContent sx={{ textAlign: "center", p: 3 }}>
+          {loading ? (
+            <CircularProgress />
+          ) : authenticated ? (
+            <>
+              <Typography variant="body1">En sesión como {username}.</Typography>
+              <Button variant="contained" color="secondary" sx={{ mt: 2 }} onClick={() => router.push("/dashboard")}>
+                Ir al Dashboard
+              </Button>
+            </>
+          ) : (
+            <>
+              <Typography variant="body1">Inicia sesión o crea una cuenta para continuar.</Typography>
+              <Stack direction="row" justifyContent="center" spacing={2} sx={{ mt: 2 }}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => {
+                    router.push("/login");
+                    handleLoginSuccess(); // ✅ Update username immediately after login
+                  }}
+                >
+                  Login
+                </Button>
+                <Button variant="outlined" color="primary" onClick={() => router.push("/register")}>
+                  Registrarse
+                </Button>
+              </Stack>
+            </>
+          )}
+        </DialogContent>
+        {authenticated && (
+          <DialogActions>
+            {/* ✅ Logout Button */}
+            <Button onClick={handleLogout} variant="outlined" color="error">
+              Cerrar Sesión
+            </Button>
+          </DialogActions>
+        )}
+      </Dialog>
     </Box>
   );
 }
