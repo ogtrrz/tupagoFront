@@ -2,6 +2,8 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "@/theme";
+import SearchAppBar from "@/components/SearchAppBar";
+import MyFooter from "@/components/MyFooter";
 
 export const metadata = {
   title: "TuPago.click, CoDi pagos gratuitos.",
@@ -24,7 +26,9 @@ export default function RootLayout({ children }) {
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>
             <CssBaseline />
+            <SearchAppBar />
             {children}
+            <MyFooter />
           </ThemeProvider>
         </AppRouterCacheProvider>
       </body>

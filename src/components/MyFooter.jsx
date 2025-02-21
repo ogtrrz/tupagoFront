@@ -16,39 +16,7 @@ import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import CookieIcon from "@mui/icons-material/Cookie";
 
 const MyFooter = () => {
-	// const router = useRouter();
-	const handleOnClick = (e, param) => {
-		e.preventDefault();
-		// console.log("event", param);
-		if (param === "linkedin") {
-			return window.open(
-				"https://www.linkedin.com/in/omar-gutierrez-07a2421ba/",
-				"_ blank"
-			);
-		}
-		// if (param === "contactForm") {
-		// 	return router.push("/ContactForm");
-		// }
-		// if (param === "resume") {
-		// 	return router.push("/OmarGutierrez-CV.pdf");
-		// }
-		//window.open _blank resume without email info
-		if (param === "contactForm") {
-			return window.open(
-				"https://www.linkedin.com/in/omar-gutierrez-07a2421ba/",
-				"_ blank"
-			);
-		}
-		if (param === "github") {
-			return window.open("https://github.com/ogtrrz/", "_ blank");
-		}
-		// if (param === "architecture") {
-		// 	return router.push("/Architecture");
-		// }
-		// if (param === "privacy") {
-		// 	return router.push("/PrivacyPolicy");
-		// }
-	};
+
 	return (
 		<React.Fragment>
 			<Box sx={{ m: 10 }}></Box>
@@ -62,7 +30,7 @@ const MyFooter = () => {
 						direction='row'
 						alignItems='center'
 						gap={1}
-						onClick={(e) => handleOnClick(e, "linkedin")}
+					
 						sx={{
 							mb: 1,
 							"&:hover": {
@@ -77,7 +45,7 @@ const MyFooter = () => {
 						direction='row'
 						alignItems='center'
 						gap={1}
-						onClick={(e) => handleOnClick(e, "resume")}
+				
 						sx={{
 							mb: 1,
 							"&:hover": {
@@ -94,7 +62,7 @@ const MyFooter = () => {
 						direction='row'
 						alignItems='center'
 						gap={1}
-						onClick={(e) => handleOnClick(e, "contactForm")}
+		
 						sx={{
 							mb: 1,
 							"&:hover": {
@@ -118,7 +86,7 @@ const MyFooter = () => {
 						direction='row'
 						alignItems='center'
 						gap={1}
-						onClick={(e) => handleOnClick(e, "github")}
+					
 						sx={{
 							mb: 1,
 							"&:hover": {
@@ -133,7 +101,7 @@ const MyFooter = () => {
 						direction='row'
 						alignItems='center'
 						gap={1}
-						onClick={(e) => handleOnClick(e, "architecture")}
+						
 						sx={{
 							mb: 1,
 							"&:hover": {
@@ -148,7 +116,7 @@ const MyFooter = () => {
 						direction='row'
 						alignItems='center'
 						gap={1}
-						onClick={(e) => handleOnClick(e, "privacy")}
+						
 						sx={{
 							mb: 1,
 							"&:hover": {

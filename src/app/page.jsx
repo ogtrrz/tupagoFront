@@ -1,8 +1,6 @@
 "use client";
 
 import React from "react";
-import SearchAppBar from "@/components/SearchAppBar";
-import MyFooter from "@/components/MyFooter";
 import MyHeaderPrincipal from "@/components/MyHeaderPrincipal";
 import MediaCard from "@/components/MediaCard";
 import { data } from "@/lib/data";
@@ -21,10 +19,7 @@ import HomeIcon from "@mui/icons-material/Home";
 
 export default function HomePage() {
   return (
-    <>
-      {/* Top Navigation */}
-      <SearchAppBar />
-
+    <React.Fragment>
       {/* Breadcrumb Navigation */}
       <Box
         sx={{
@@ -66,9 +61,6 @@ export default function HomePage() {
           ))}
         </Grid>
       </Container>
-
-      {/* Footer */}
-      <MyFooter />
-    </>
+    </React.Fragment>
   );
 }
