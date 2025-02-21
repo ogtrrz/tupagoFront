@@ -28,7 +28,7 @@ export default function DynamicBreadcrumbs() {
         <HomeIcon color="primary" />
         <Link href="/" passHref>
           <Typography variant="body1" color="primary" sx={{ cursor: "pointer" }}>
-            Home
+            Inicio
           </Typography>
         </Link>
       </Stack>
@@ -40,12 +40,12 @@ export default function DynamicBreadcrumbs() {
 
         return isLast ? (
           <Typography key={url} variant="body1" color="text.primary">
-            {decodeURIComponent(segment)}
+            {decodeURIComponent(segment.replace("_", " "))}
           </Typography>
         ) : (
           <Link key={url} href={url} passHref>
             <Typography variant="body1" color="primary" sx={{ cursor: "pointer" }}>
-              {decodeURIComponent(segment)}
+              {decodeURIComponent(segment.replace("_", " "))}
             </Typography>
           </Link>
         );
