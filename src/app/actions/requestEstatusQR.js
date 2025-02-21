@@ -3,7 +3,7 @@
 import { cookies } from "next/headers";
 
 export async function requestEstatusQR(idc) {
-  console.log("idc", JSON.stringify({ idc }));
+  // console.log("idc", JSON.stringify({ idc }));
 
   try {
     const cookieStore = await cookies();
@@ -12,10 +12,10 @@ export async function requestEstatusQR(idc) {
     if (!authToken) {
       throw new Error("No existe token autenticado.");
     }
-    console.log(
-      "`${process.env.JSONPATH}payments/estatusmsjqrusuario`",
-      `${process.env.JSONPATH}payments/estatusmsjqrusuario`
-    );
+    // console.log(
+    //   "`${process.env.JSONPATH}payments/estatusmsjqrusuario`",
+    //   `${process.env.JSONPATH}payments/estatusmsjqrusuario`
+    // );
 
     const response = await fetch(
       `${process.env.JSONPATH}payments/estatusmsjqrusuario`,
@@ -35,7 +35,7 @@ export async function requestEstatusQR(idc) {
     }
 
     const responseData = await response.json(); // ✅ API response as an array
-    console.log("responseData", responseData);
+    // console.log("responseData", responseData);
     
 
     const validCRData = responseData
@@ -48,7 +48,7 @@ export async function requestEstatusQR(idc) {
           nb: item.c?.nb || "N/A", // ✅ Extract nb (nombre del banco) safely
         },
       }));
-    console.log("validCRData", validCRData);
+    // console.log("validCRData", validCRData);
 
     return validCRData; // Return the filtered array
   } catch (error) {

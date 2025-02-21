@@ -9,7 +9,7 @@ export async function getSkills() {
       return { skills: data.skills };
     }
 
-    console.log("Fetching from:", apiUrl);
+    // console.log("Fetching from:", apiUrl);
 
     const res = await fetch(`${apiUrl}/skills`, {
       cache: "force-cache",
@@ -28,7 +28,7 @@ export async function getSkills() {
       return { skills: data.skills };
     }
 
-    console.log("✅ Successfully fetched skills:", fetchedData.skills.length);
+    // console.log("✅ Successfully fetched skills:", fetchedData.skills.length);
     return fetchedData;
   } catch (error) {
     console.error("❌ Fetch error:", error.message, "Using fallback data.");
