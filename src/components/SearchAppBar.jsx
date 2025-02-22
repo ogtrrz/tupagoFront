@@ -16,13 +16,19 @@ import {
   Dialog,
   DialogTitle,
   DialogActions,
+  useMediaQuery,
 } from "@mui/material";
 import {
   Menu as MenuIcon,
   Search as SearchIcon,
   Close as CloseIcon,
 } from "@mui/icons-material";
+import QrCode2Icon from "@mui/icons-material/QrCode2";
+import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
+import LoginIcon from "@mui/icons-material/Login";
+import LogoutIcon from "@mui/icons-material/Logout";
 import { useRouter } from "next/navigation";
+import { useTheme } from "@mui/material/styles";
 
 // Styled Components for Search Bar
 const Search = styled("div")(({ theme }) => ({
@@ -64,6 +70,8 @@ export default function SearchAppBar() {
   const router = useRouter();
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // ✅ Detect if screen width < 600px
 
   // 🔹 Handle Search Submission
   const handleSearch = async () => {
@@ -100,23 +108,43 @@ export default function SearchAppBar() {
             </IconButton>
           )}
 
-          {/* ✅ Display Username */}
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            {status === "loading"
-              ? "Cargando..."
-              : session?.user?.username
-              ? `Hola, ${session.user.username}`
-              : "Bienvenido"}
-          </Typography>
+          {/* ✅ Display Username - Hide "Bienvenido"/"Hola" if screen width < 600px */}
+          {!isMobile && (
+            <Typography variant="h6" sx={{ flexGrow: 1 }}>
+              {status === "loading"
+                ? "Cargando..."
+                : session?.user?.username
+                ? `Hola, ${session.user.username}`
+                : "Bienvenido"}
+            </Typography>
+          )}
+          {isMobile && session?.user?.username && (
+            <Typography variant="h6" sx={{ flexGrow: 1 }}>
+              {session.user.username}
+            </Typography>
+          )}
 
-          {session ? (
-            <Button color="inherit" onClick={() => signOut()}>
-              Cerrar Sesión
-            </Button>
+          {/* ✅ Login/Logout Buttons with Icons - Hide "Cerrar Sesión" on small screens */}
+          {!isMobile ? (
+            session ? (
+              <Button
+                color="inherit"
+                onClick={() => signOut()}
+                startIcon={<LogoutIcon />}
+              >
+                Cerrar Sesión
+              </Button>
+            ) : (
+              <Button color="inherit" href="/login" startIcon={<LoginIcon />}>
+                Iniciar Sesión
+              </Button>
+            )
           ) : (
-            <Button color="inherit" href="/login">
-              Iniciar Sesión
-            </Button>
+            !session && (
+              <IconButton color="inherit" href="/login">
+                <LoginIcon />
+              </IconButton>
+            )
           )}
 
           {/* Search Bar */}
@@ -145,7 +173,7 @@ export default function SearchAppBar() {
       </AppBar>
 
       {/* 🔹 Authentication Dialog */}
-      <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
+      <Dialog open={open} onClose={handleClose} fullWidth maxWidth="xs">
         <DialogTitle sx={{ backgroundColor: "primary.main", color: "white" }}>
           {session ? "Menú de Usuario" : "Bienvenido"}
         </DialogTitle>
@@ -156,21 +184,47 @@ export default function SearchAppBar() {
         >
           <CloseIcon />
         </IconButton>
-        <DialogActions sx={{ display: "flex", flexDirection: "column", gap: 2, px: 3, pb: 3 }}>
+        <DialogActions
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 2,
+            px: 3,
+            pb: 3,
+          }}
+        >
           {/* Show buttons only when logged in */}
           {session && (
             <>
-              <Button variant="contained" color="primary" fullWidth onClick={() => navigateTo("/mensajes")}>
+              <Button
+                variant="contained"
+                color="primary"
+                fullWidth
+                startIcon={<AccountBalanceWalletIcon />}
+                onClick={() => navigateTo("/mensajes")}
+              >
                 Ver Pagos
               </Button>
-              <Button variant="outlined" color="secondary" fullWidth onClick={() => navigateTo("/form/msjPagoQR")}>
+              <Button
+                variant="outlined"
+                color="secondary"
+                fullWidth
+                startIcon={<QrCode2Icon />}
+                onClick={() => navigateTo("/form/msjPagoQR")}
+              >
                 Crear Pago QR
               </Button>
             </>
           )}
-          {/* ✅ Logout Button */}
+          {/* ✅ Logout Button with Icon */}
           {session && (
-            <Button variant="outlined" color="error" fullWidth onClick={() => signOut()}>
+            <Button
+              variant="outlined"
+              color="error"
+              fullWidth
+              onClick={() => signOut()}
+              startIcon={<LogoutIcon />}
+            >
               Cerrar Sesión
             </Button>
           )}
