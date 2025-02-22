@@ -35,12 +35,12 @@ export default function MensajesTable() {
   const [mensajes, setMensajes] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
   const [totalMessages, setTotalMessages] = useState(0);
-  // const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true); // ✅ Add loading state
   const [error, setError] = useState(null);
 
   useEffect(() => {
     async function loadMensajes() {
-      // setLoading(true);
+      setLoading(true); // ✅ Show loading indicator
       try {
         const { mensajes, totalMessages, totalPages, error } = await fetchMensajes(page - 1);
 
@@ -49,33 +49,29 @@ export default function MensajesTable() {
         setMensajes(mensajes);
         setTotalMessages(totalMessages);
         setTotalPages(totalPages);
-
-        console.log("🔹 Loaded Messages:", totalMessages);
       } catch (err) {
         setError(err.message);
       } finally {
-        // setLoading(false);
+        setLoading(false); // ✅ Hide loading indicator
       }
     }
 
     loadMensajes();
   }, [page]);
 
-  console.log("totalMessages", totalMessages);
-  console.log("totalPages", totalPages);
-
-  // if (loading) {
-  //   return (
-  //     <Box
-  //       display="flex"
-  //       justifyContent="center"
-  //       alignItems="center"
-  //       height="100vh"
-  //     >
-  //       <CircularProgress />
-  //     </Box>
-  //   );
-  // }
+  // ✅ Show loading indicator while fetching data
+  if (loading) {
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="100vh"
+      >
+        <CircularProgress size={50} />
+      </Box>
+    );
+  }
 
   if (error) {
     return <Typography color="error">Error: {error}</Typography>;
@@ -186,6 +182,7 @@ export default function MensajesTable() {
             page={page}
             size="small"
             onChange={(event, value) => {
+              window.scrollTo({ top: 0, behavior: "smooth" }); // ✅ Scroll to top
               router.push(`?page=${value}`, { scroll: false });
             }}
           />
