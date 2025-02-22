@@ -32,13 +32,13 @@ export async function fetchMensajes(page = 0) {
     }
 
     // ✅ Log ALL response headers
-    console.log("🔹 Response Headers:", [...res.headers.entries()]);
+    // console.log("🔹 Response Headers:", [...res.headers.entries()]);
 
     // ✅ Retrieve total messages correctly
     const totalMessages =
       parseInt(res.headers.get("X-Total-Count") || res.headers.get("x-total-count")) || 0;
 
-    console.log("✅ Total Messages from Headers:", totalMessages);
+    // console.log("✅ Total Messages from Headers:", totalMessages);
 
     const totalPages = Math.ceil(totalMessages / PAGE_SIZE);
     const data = await res.json();

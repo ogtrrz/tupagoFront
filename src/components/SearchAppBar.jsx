@@ -202,6 +202,7 @@ export default function SearchAppBar() {
                 color="primary"
                 fullWidth
                 startIcon={<AccountBalanceWalletIcon />}
+                sx={{ justifyContent: "flex-start" }}
                 onClick={() => navigateTo("/mensajes")}
               >
                 Ver Pagos
@@ -211,6 +212,7 @@ export default function SearchAppBar() {
                 color="secondary"
                 fullWidth
                 startIcon={<QrCode2Icon />}
+                sx={{ justifyContent: "flex-start" }}
                 onClick={() => navigateTo("/form/msjPagoQR")}
               >
                 Crear Pago QR
@@ -220,6 +222,7 @@ export default function SearchAppBar() {
                 color="secondary"
                 fullWidth
                 startIcon={<AccountCircleIcon />}
+                sx={{ justifyContent: "flex-start" }}
                 onClick={() => navigateTo("/clientes")}
               >
                 Mis Datos
@@ -232,8 +235,9 @@ export default function SearchAppBar() {
               variant="outlined"
               color="error"
               fullWidth
-              onClick={() => signOut()}
               startIcon={<LogoutIcon />}
+              sx={{ justifyContent: "flex-start" }}
+              onClick={() => signOut()}
             >
               Cerrar Sesión
             </Button>
