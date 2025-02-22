@@ -10,7 +10,7 @@ export default function MyHeaderPrincipal({ imageURL, label }) {
 				width: "100%",
 				height: "60vh", // ✅ Defines height to push other components down
 				backgroundImage: `url(${imageURL || "/tupago.webp"})`,
-				backgroundPosition: "center",
+				backgroundPosition: "top",
 				backgroundSize: "cover",
 				backgroundRepeat: "no-repeat",
 				display: "flex",
@@ -24,7 +24,7 @@ export default function MyHeaderPrincipal({ imageURL, label }) {
 					bgcolor: "rgba(0, 0, 0, 0.8)", // ✅ Dark overlay
 				}}>
 				<Typography variant="h4" align="left" color="white">
-					{label || "Omar Gutierrez, Fullstack Developer."}
+					{label || "TuPago.click, pagos fáciles y gratuitos, remotos o presentes, ES TODO"}
 				</Typography>
 			</Box>
 		</Box>
