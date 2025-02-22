@@ -60,7 +60,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function SearchAppBar() {
-  const { data: session, status } = useSession(); // ✅ Now includes `status`
+  const { data: session, status } = useSession(); // ✅ Get session data
   const router = useRouter();
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
@@ -73,6 +73,12 @@ export default function SearchAppBar() {
     router.push(`/search?query=${encodedURL}`);
   };
 
+  // 🔹 Handle Navigation
+  const navigateTo = (path) => {
+    router.push(path);
+    setOpen(false); // Close dialog after navigation
+  };
+
   // 🔹 Handle Menu Dialog Open/Close
   const handleClickOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -81,16 +87,18 @@ export default function SearchAppBar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed">
         <Toolbar>
-          {/* Menu Icon */}
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            sx={{ mr: 2 }}
-            onClick={handleClickOpen}
-          >
-            <MenuIcon />
-          </IconButton>
+          {/* ✅ Hide Menu Button if not logged in */}
+          {session && (
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              sx={{ mr: 2 }}
+              onClick={handleClickOpen}
+            >
+              <MenuIcon />
+            </IconButton>
+          )}
 
           {/* ✅ Display Username */}
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
@@ -139,7 +147,7 @@ export default function SearchAppBar() {
       {/* 🔹 Authentication Dialog */}
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
         <DialogTitle sx={{ backgroundColor: "primary.main", color: "white" }}>
-          Dialog title
+          {session ? "Menú de Usuario" : "Bienvenido"}
         </DialogTitle>
         <IconButton
           aria-label="close"
@@ -148,13 +156,25 @@ export default function SearchAppBar() {
         >
           <CloseIcon />
         </IconButton>
-        <DialogActions>
+        <DialogActions sx={{ display: "flex", flexDirection: "column", gap: 2, px: 3, pb: 3 }}>
+          {/* Show buttons only when logged in */}
+          {session && (
+            <>
+              <Button variant="contained" color="primary" fullWidth onClick={() => navigateTo("/mensajes")}>
+                Ver Pagos
+              </Button>
+              <Button variant="outlined" color="secondary" fullWidth onClick={() => navigateTo("/form/msjPagoQR")}>
+                Crear Pago QR
+              </Button>
+            </>
+          )}
           {/* ✅ Logout Button */}
-          <Button variant="outlined" color="error">
-            Cerrar Sesión
-          </Button>
+          {session && (
+            <Button variant="outlined" color="error" fullWidth onClick={() => signOut()}>
+              Cerrar Sesión
+            </Button>
+          )}
         </DialogActions>
-        )
       </Dialog>
     </Box>
   );
