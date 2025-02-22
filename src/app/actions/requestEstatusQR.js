@@ -1,29 +1,26 @@
 "use server";
 
-import { cookies } from "next/headers";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route"; // ✅ Import NextAuth config
 
 export async function requestEstatusQR(idc) {
-  // console.log("idc", JSON.stringify({ idc }));
-
   try {
-    const cookieStore = await cookies();
-    const authToken = cookieStore.get("auth_token")?.value;
-
-    if (!authToken) {
-      throw new Error("No existe token autenticado.");
+    // ✅ Retrieve session using NextAuth
+    const session = await getServerSession(authOptions);
+    if (!session || !session.accessToken) {
+      throw new Error("No existe sesión autenticada.");
     }
-    // console.log(
-    //   "`${process.env.JSONPATH}payments/estatusmsjqrusuario`",
-    //   `${process.env.JSONPATH}payments/estatusmsjqrusuario`
-    // );
 
+    console.log("🔹 Using Access Token:", session.accessToken);
+
+    // ✅ Make request using NextAuth token
     const response = await fetch(
       `${process.env.JSONPATH}payments/estatusmsjqrusuario`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${authToken}`,
+          Authorization: `Bearer ${session.accessToken}`,
         },
         body: JSON.stringify({ idc: "318988a825" }), //JSON.stringify({ idc }), //TODO modificar pruebas estatus
       }
@@ -34,10 +31,9 @@ export async function requestEstatusQR(idc) {
       throw new Error(`Error al solicitar estatus: ${errorMessage}`);
     }
 
-    const responseData = await response.json(); // ✅ API response as an array
-    // console.log("responseData", responseData);
-    
+    const responseData = await response.json(); // ✅ Parse JSON response
 
+    // ✅ Process valid `cr` data
     const validCRData = responseData
       .filter((item) => item.cr !== null) // Remove entries where `cr` is null
       .map((item) => ({
@@ -48,11 +44,11 @@ export async function requestEstatusQR(idc) {
           nb: item.c?.nb || "N/A", // ✅ Extract nb (nombre del banco) safely
         },
       }));
-    // console.log("validCRData", validCRData);
 
-    return validCRData; // Return the filtered array
+    console.log("✅ Valid CR Data:", validCRData);
+    return validCRData; // ✅ Return filtered array
   } catch (error) {
+    console.error("❌ Error in requestEstatusQR:", error.message);
     return { error: error.message };
   }
 }
-//[ "2024120940995d63912d17c6505a4f", "2024120940995a3b7c167e5a706367" ]

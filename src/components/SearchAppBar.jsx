@@ -25,7 +25,6 @@ import {
   Close as CloseIcon,
 } from "@mui/icons-material";
 import { useRouter } from "next/navigation";
-import { getUsername, logout } from "@/app/actions/checkAuth"; // ✅ Import logout function
 
 // Styled Components for Search Bar
 const Search = styled("div")(({ theme }) => ({
@@ -67,27 +66,6 @@ export default function SearchAppBar() {
   const router = useRouter();
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [authenticated, setAuthenticated] = useState(false);
-  const [username, setUsername] = useState("Invitado");
-
-  // ✅ Fetch authentication status and username
-  async function fetchAuthStatus() {
-    const auth = await getUsername();
-    setLoading(false);
-
-    if (auth.authenticated && auth.username) {
-      setAuthenticated(true);
-      setUsername(auth.username);
-    } else {
-      setAuthenticated(false);
-      setUsername("Invitado");
-    }
-  }
-
-  useEffect(() => {
-    fetchAuthStatus();
-  }, []); // ✅ Runs only on mount
 
   // 🔹 Handle Search Submission
   const handleSearch = async () => {
@@ -98,11 +76,11 @@ export default function SearchAppBar() {
   };
 
   // 🔹 Handle Logout
-  const handleLogout = async () => {
-    await logout(); // ✅ Call logout action
-    router.refresh(); // ✅ Reload page to update state
-    setOpen(false);
-  };
+  // const handleLogout = async () => {
+  //   await logout(); // ✅ Call logout action
+  //   router.refresh(); // ✅ Reload page to update state
+  //   setOpen(false);
+  // };
 
   // 🔹 Handle Menu Dialog Open/Close
   const handleClickOpen = () => setOpen(true);
@@ -170,7 +148,7 @@ export default function SearchAppBar() {
       {/* 🔹 Authentication Dialog */}
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
         <DialogTitle sx={{ backgroundColor: "primary.main", color: "white" }}>
-          {loading ? "Cargando..." : authenticated ? "User Menu" : "Bienvenido"}
+          Dialog title
         </DialogTitle>
         <IconButton
           aria-label="close"
@@ -179,60 +157,13 @@ export default function SearchAppBar() {
         >
           <CloseIcon />
         </IconButton>
-        <DialogContent sx={{ textAlign: "center", p: 3 }}>
-          {loading ? (
-            <CircularProgress />
-          ) : authenticated ? (
-            <>
-              <Typography variant="body1">
-                En sesión como {username}.
-              </Typography>
-              <Button
-                variant="contained"
-                color="secondary"
-                sx={{ mt: 2 }}
-                onClick={() => router.push("/dashboard")}
-              >
-                Ir al Dashboard
-              </Button>
-            </>
-          ) : (
-            <>
-              <Typography variant="body1">
-                Inicia sesión o crea una cuenta para continuar.
-              </Typography>
-              <Stack
-                direction="row"
-                justifyContent="center"
-                spacing={2}
-                sx={{ mt: 2 }}
-              >
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => router.push("/login")}
-                >
-                  Login
-                </Button>
-                <Button
-                  variant="outlined"
-                  color="primary"
-                  onClick={() => router.push("/register")}
-                >
-                  Registrarse
-                </Button>
-              </Stack>
-            </>
-          )}
-        </DialogContent>
-        {authenticated && (
-          <DialogActions>
-            {/* ✅ Logout Button */}
-            <Button onClick={handleLogout} variant="outlined" color="error">
-              Cerrar Sesión
-            </Button>
-          </DialogActions>
-        )}
+        <DialogActions>
+          {/* ✅ Logout Button */}
+          <Button variant="outlined" color="error">
+            Cerrar Sesión
+          </Button>
+        </DialogActions>
+        )
       </Dialog>
     </Box>
   );

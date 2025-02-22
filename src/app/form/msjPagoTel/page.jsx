@@ -1,5 +1,5 @@
 "use client";
-
+//TODO corregir para usar actions
 import { useState } from "react";
 import {
   TextField,
@@ -10,6 +10,7 @@ import {
   Typography,
   CircularProgress,
 } from "@mui/material";
+import { getSession } from "next-auth/react";
 
 export default function MensajePagoTelefonicoForm() {
   const [formData, setFormData] = useState({
@@ -32,22 +33,35 @@ export default function MensajePagoTelefonicoForm() {
     e.preventDefault();
     setLoading(true);
     setError(null);
-    
-    try {
-      const response = await fetch(`${process.env.JSONPATH}payments/msjpagotelefonico`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${process.env.NEXT_PUBLIC_AUTH_TOKEN}`,
-        },
-        body: JSON.stringify(formData),
-      });
 
-      if (!response.ok) {
-        throw new Error("Failed to submit payment");
+    try {
+      // ✅ Retrieve session in client component
+      const session = await getSession();
+      if (!session || !session.accessToken) {
+        throw new Error("No existe sesión autenticada.");
       }
 
-      alert("Payment submitted successfully!");
+      console.log("🔹 Using Access Token:", session.accessToken);
+
+      // ✅ Send request with NextAuth JWT token
+      const response = await fetch(
+        `${process.env.JSONPATH}payments/msjpagotelefonico`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${session.accessToken}`, // ✅ Use NextAuth JWT token
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+
+      if (!response.ok) {
+        const errorMessage = await response.text();
+        throw new Error(`Error al enviar pago: ${errorMessage}`);
+      }
+
+      alert("✅ Pago enviado con éxito!");
       setFormData({
         key: "",
         monto: "",
@@ -58,6 +72,7 @@ export default function MensajePagoTelefonicoForm() {
       });
     } catch (err) {
       setError(err.message);
+      console.error("❌ Error in sendMensajePagoQR:", err.message);
     } finally {
       setLoading(false);
     }
