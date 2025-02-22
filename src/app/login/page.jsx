@@ -13,9 +13,6 @@ import {
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 
-// import { authenticateUser } from "@/app/actions/auth"; // ✅ Import authentication function
-// import { useAuth } from "@/app/context/AuthContext";
-
 export default function LoginForm() {
   const [formData, setFormData] = useState({ username: "", password: "" });
   const [error, setError] = useState(null);

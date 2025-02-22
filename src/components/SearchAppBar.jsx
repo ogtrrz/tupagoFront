@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { styled, alpha } from "@mui/material/styles";
 import { signOut, useSession } from "next-auth/react";
 import {
@@ -15,8 +15,6 @@ import {
   Stack,
   Dialog,
   DialogTitle,
-  DialogContent,
-  CircularProgress,
   DialogActions,
 } from "@mui/material";
 import {
@@ -74,13 +72,6 @@ export default function SearchAppBar() {
     setSearch("");
     router.push(`/search?query=${encodedURL}`);
   };
-
-  // 🔹 Handle Logout
-  // const handleLogout = async () => {
-  //   await logout(); // ✅ Call logout action
-  //   router.refresh(); // ✅ Reload page to update state
-  //   setOpen(false);
-  // };
 
   // 🔹 Handle Menu Dialog Open/Close
   const handleClickOpen = () => setOpen(true);
