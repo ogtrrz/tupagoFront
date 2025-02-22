@@ -1,4 +1,4 @@
-"use client";
+"use client"; // ✅ Ensure this is a Client Component
 
 import React, { useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
@@ -24,6 +24,7 @@ import PriceCheckSharpIcon from "@mui/icons-material/PriceCheckSharp";
 import DoNotDisturbAltSharpIcon from "@mui/icons-material/DoNotDisturbAltSharp";
 import WatchLaterSharpIcon from "@mui/icons-material/WatchLaterSharp";
 import CoffeeSharpIcon from "@mui/icons-material/CoffeeSharp";
+import { fetchMensajes } from "@/app/actions/fetchMensajes"; // ✅ Import server action
 
 const PAGE_SIZE = 10;
 
@@ -34,49 +35,47 @@ export default function MensajesTable() {
   const [mensajes, setMensajes] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
   const [totalMessages, setTotalMessages] = useState(0);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    async function fetchMensajes() {
+    async function loadMensajes() {
+      // setLoading(true);
       try {
-        setLoading(true);
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_APP_URL}/api/mensajesadd?page=${
-            page - 1
-          }&size=${PAGE_SIZE}&eagerload=true`
-        );
-        if (!res.ok) {
-          throw new Error("Failed to fetch messages");
-        }
-        const data = await res.json();
-        const totalMessagesCount =
-          parseInt(res.headers.get("X-Total-Count")) || 0;
-        setMensajes(data);
-        setTotalMessages(totalMessagesCount);
-        setTotalPages(Math.ceil(totalMessagesCount / PAGE_SIZE));
+        const { mensajes, totalMessages, totalPages, error } = await fetchMensajes(page - 1);
+
+        if (error) throw new Error(error);
+
+        setMensajes(mensajes);
+        setTotalMessages(totalMessages);
+        setTotalPages(totalPages);
+
+        console.log("🔹 Loaded Messages:", totalMessages);
       } catch (err) {
         setError(err.message);
       } finally {
-        setLoading(false);
+        // setLoading(false);
       }
     }
 
-    fetchMensajes();
+    loadMensajes();
   }, [page]);
 
-  if (loading) {
-    return (
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        height="100vh"
-      >
-        <CircularProgress />
-      </Box>
-    );
-  }
+  console.log("totalMessages", totalMessages);
+  console.log("totalPages", totalPages);
+
+  // if (loading) {
+  //   return (
+  //     <Box
+  //       display="flex"
+  //       justifyContent="center"
+  //       alignItems="center"
+  //       height="100vh"
+  //     >
+  //       <CircularProgress />
+  //     </Box>
+  //   );
+  // }
 
   if (error) {
     return <Typography color="error">Error: {error}</Typography>;
@@ -109,11 +108,14 @@ export default function MensajesTable() {
             {mensajes.map((mensaje) => (
               <TableRow key={mensaje.id} hover>
                 <TableCell>
-                  <NextLink href={`/mensajes/${mensaje.id}`} passHref legacyBehavior>
+                  <NextLink
+                    href={`/mensajes/${mensaje.id}`}
+                    passHref
+                    legacyBehavior
+                  >
                     <MuiLink underline="none">
                       <Typography variant="body1">
-                        {mensaje?.nombreCliente}
-                        {mensaje?.numeroCelular}
+                        {mensaje?.nombreCliente} {mensaje?.numeroCelular}
                       </Typography>
                     </MuiLink>
                   </NextLink>
@@ -136,7 +138,11 @@ export default function MensajesTable() {
                 </TableCell>
                 <TableCell>{mensaje?.concepto}</TableCell>
                 <TableCell align="right">
-                  <Box display="flex" justifyContent="flex-end" alignItems="center">
+                  <Box
+                    display="flex"
+                    justifyContent="flex-end"
+                    alignItems="center"
+                  >
                     {mensaje.edoPet === 0 || mensaje.edoPet === 1 ? (
                       <Tooltip title="Pagado" placement="left">
                         <PriceCheckSharpIcon sx={{ color: "#00B389" }} />
@@ -172,10 +178,11 @@ export default function MensajesTable() {
         </Table>
       </TableContainer>
 
-      {totalMessages > 20 && (
+      {/* ✅ Ensure Pagination Always Appears When More Than 1 Page */}
+      {totalPages > 1 && (
         <Box display="flex" justifyContent="center" mt={2}>
           <Pagination
-            count={totalPages}
+            count={totalPages-1}
             page={page}
             size="small"
             onChange={(event, value) => {
