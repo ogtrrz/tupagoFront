@@ -27,6 +27,7 @@ import QrCode2Icon from "@mui/icons-material/QrCode2";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useRouter } from "next/navigation";
 import { useTheme } from "@mui/material/styles";
 
@@ -213,6 +214,15 @@ export default function SearchAppBar() {
                 onClick={() => navigateTo("/form/msjPagoQR")}
               >
                 Crear Pago QR
+              </Button>
+              <Button
+                variant="outlined"
+                color="secondary"
+                fullWidth
+                startIcon={<AccountCircleIcon />}
+                onClick={() => navigateTo("/clientes")}
+              >
+                Mis Datos
               </Button>
             </>
           )}
