@@ -11,42 +11,36 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { useRouter } from "next/navigation";
-import { authenticateUser } from "@/app/actions/auth"; // ✅ Import authentication function
-import { useAuth } from "@/app/context/AuthContext";
+import { signIn } from "next-auth/react";
+
+// import { authenticateUser } from "@/app/actions/auth"; // ✅ Import authentication function
+// import { useAuth } from "@/app/context/AuthContext";
 
 export default function LoginForm() {
-  const { fetchAuthStatus } = useAuth(); // ✅ useAuth() now works correctly in a Client Component
-
-  const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-  });
-  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({ username: "", password: "" });
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setFormData((prev) => ({ ...prev, [name]: value }));
-  // };
-
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    setLoading(true);
     setError(null);
+    setLoading(true);
 
-    const result = await authenticateUser(formData.username, formData.password);
+    const result = await signIn("credentials", {
+      redirect: false,
+      username: formData.username,
+      password: formData.password,
+    });
 
     if (result.error) {
-      setError(result.error);
+      setError("Usuario o Contraseña invalidos");
       setLoading(false);
       return;
     }
-
-    // ✅ Ensure authentication state updates immediately after login\
-    await fetchAuthStatus(); // ✅ Explicitly fetch authentication status before refreshing
-    // router.refresh(); // ✅ Force Next.js to reload and update authentication state
-    router.push("/mensajes"); // ✅ Redirect to /mensajes after login
+    console.log("redirecting /mensajes");
+    setLoading(false);
+    router.push("/mensajes"); // Redirect after successful login
   };
 
   return (
@@ -61,7 +55,7 @@ export default function LoginForm() {
           <Typography variant="h5" gutterBottom>
             Iniciar Sesión
           </Typography>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleLogin}>
             <TextField
               fullWidth
               margin="normal"
@@ -80,7 +74,9 @@ export default function LoginForm() {
               name="password"
               type="password"
               value={formData.password}
-              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, password: e.target.value })
+              }
               required
             />
             {error && <Typography color="error">{error}</Typography>}

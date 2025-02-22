@@ -3,6 +3,7 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { styled, alpha } from "@mui/material/styles";
+import { signOut, useSession } from "next-auth/react";
 import {
   AppBar,
   Box,
@@ -62,6 +63,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function SearchAppBar() {
+  const { data: session, status } = useSession(); // ✅ Now includes `status`
   const router = useRouter();
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
@@ -122,9 +124,23 @@ export default function SearchAppBar() {
           </IconButton>
 
           {/* ✅ Display Username */}
-          <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
-            Hola {username}
+          <Typography variant="h6" sx={{ flexGrow: 1 }}>
+            {status === "loading"
+              ? "Cargando..."
+              : session?.user?.username
+              ? `Hola, ${session.user.username}`
+              : "Bienvenido"}
           </Typography>
+
+          {session ? (
+            <Button color="inherit" onClick={() => signOut()}>
+              Cerrar Sesión
+            </Button>
+          ) : (
+            <Button color="inherit" href="/login">
+              Iniciar Sesión
+            </Button>
+          )}
 
           {/* Search Bar */}
           <Stack direction="row" alignItems="center" gap={1}>

@@ -1,29 +1,24 @@
+import { getToken } from "next-auth/jwt";
 import { NextResponse } from "next/server";
 
-export function middleware(request) {
-  // ✅ Get cookies manually from headers (Edge runtime limitation)
-  // console.log("Middleware 5");
-
-  const cookieHeader = request.headers.get("cookie");
-  const authToken = cookieHeader
-    ?.split("; ")
-    .find((c) => c.startsWith("auth_token="))
-    ?.split("=")[1];
+export async function middleware(request) {
+  // ✅ Retrieve session token from NextAuth
+  const token = await getToken({ req: request });
 
   // ✅ Define protected paths
   const protectedRoutes = ["/form", "/clientes", "/mensajes"];
 
-  // ✅ If trying to access a protected route without token, redirect to /login
+  // ✅ If trying to access a protected route without a valid session, redirect to /login
   if (
     protectedRoutes.some((route) => request.nextUrl.pathname.startsWith(route))
   ) {
-    // console.log("Middleware 15");
-    if (!authToken) {
-      // console.log("Middleware 16");
+    if (!token) {
+      console.log("🔴 No session found. Redirecting to /login...");
       return NextResponse.redirect(new URL("/login", request.url));
     }
   }
-  // console.log("Middleware 21");
+
+  // ✅ Allow request to proceed
   return NextResponse.next();
 }
 

@@ -5,9 +5,9 @@ import theme from "@/theme";
 import SearchAppBar from "@/components/SearchAppBar";
 import MyFooter from "@/components/MyFooter";
 // import { Box } from "@mui/material";
-import DynamicBreadcrumbs from "@/components/DynamicBreadcrumbs"; 
-import { AuthProvider } from "@/app/context/AuthContext";
-
+import DynamicBreadcrumbs from "@/components/DynamicBreadcrumbs";
+// import { SessionProvider } from "next-auth/react";
+import SessionProviderWrapper from "@/app/providers/SessionProvider";
 
 export const metadata = {
   title: "TuPago.click, CoDi pagos gratuitos.",
@@ -30,16 +30,16 @@ export default function RootLayout({ children }) {
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>
             <CssBaseline />
-            <AuthProvider>
-            <SearchAppBar />
-            <main style={{ paddingTop: "80px" }}>
-              {" "}
-              {/* ✅ Prevent overlap */}
-              <DynamicBreadcrumbs /> {/* ✅ Show breadcrumbs */}
-              {children}
-            </main>
-            <MyFooter />
-            </AuthProvider>
+            <SessionProviderWrapper>
+              <SearchAppBar />
+              <main style={{ paddingTop: "80px" }}>
+                {" "}
+                {/* ✅ Prevent overlap */}
+                <DynamicBreadcrumbs /> {/* ✅ Show breadcrumbs */}
+                {children}
+              </main>
+              <MyFooter />
+            </SessionProviderWrapper>
           </ThemeProvider>
         </AppRouterCacheProvider>
       </body>
