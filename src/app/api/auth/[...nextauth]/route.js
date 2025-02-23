@@ -2,8 +2,6 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import axios from "axios";
 
-const BACKEND_URL = process.env.JSONPATH || "http://localhost:8080";
-
 export const authOptions = {
   providers: [
     CredentialsProvider({
@@ -14,7 +12,7 @@ export const authOptions = {
       },
       async authorize(credentials) {
         try {
-          const response = await axios.post(`${BACKEND_URL}authenticate`, {
+          const response = await axios.post(`${process.env.JSONPATH}authenticate`, {
             username: credentials.username,
             password: credentials.password,
           });
@@ -58,6 +56,28 @@ export const authOptions = {
     signIn: "/login",
   },
   secret: process.env.NEXTAUTH_SECRET, // Generate a secure secret key
+
+  // ✅ Completely disable debug logs
+  // debug: false, // 🔹 No internal NextAuth logs
+
+  // // ✅ Suppress error, warning, and debug logs
+  // logger: {
+  //   error: (code, metadata) => {
+  //     if (process.env.NODE_ENV !== "production") {
+  //       console.error(code, metadata);
+  //     }
+  //   },
+  //   warn: (code) => {
+  //     if (process.env.NODE_ENV !== "production") {
+  //       console.warn(code);
+  //     }
+  //   },
+  //   debug: (code, metadata) => {
+  //     if (process.env.NODE_ENV !== "production") {
+  //       console.debug(code, metadata);
+  //     }
+  //   },
+  // },
 };
 
 const handler = NextAuth(authOptions);

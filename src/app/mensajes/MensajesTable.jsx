@@ -42,7 +42,8 @@ export default function MensajesTable() {
     async function loadMensajes() {
       setLoading(true); // ✅ Show loading indicator
       try {
-        const { mensajes, totalMessages, totalPages, error } = await fetchMensajes(page - 1);
+        const { mensajes, totalMessages, totalPages, error } =
+          await fetchMensajes(page - 1);
 
         if (error) throw new Error(error);
 
@@ -102,7 +103,11 @@ export default function MensajesTable() {
           </TableHead>
           <TableBody>
             {mensajes.map((mensaje) => (
-              <TableRow key={mensaje.id} hover>
+              <TableRow
+                key={mensaje.id}
+                hover
+                onMouseEnter={() => router.prefetch(`/mensajes/${mensaje.id}`)} // ✅ Prefetch on hover
+              >
                 <TableCell>
                   <NextLink
                     href={`/mensajes/${mensaje.id}`}
@@ -178,12 +183,18 @@ export default function MensajesTable() {
       {totalPages > 1 && (
         <Box display="flex" justifyContent="center" mt={2}>
           <Pagination
-            count={totalPages-1}
+            count={totalPages - 1}
             page={page}
             size="small"
             onChange={(event, value) => {
               window.scrollTo({ top: 0, behavior: "smooth" }); // ✅ Scroll to top
               router.push(`?page=${value}`, { scroll: false });
+            }}
+            onMouseEnter={(event) => {
+              const nextPage = parseInt(event.target.innerText, 10); // Get page number
+              if (!isNaN(nextPage)) {
+                router.prefetch(`?page=${nextPage}`); // ✅ Prefetch the next page
+              }
             }}
           />
         </Box>

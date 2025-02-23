@@ -32,3 +32,12 @@ export default function HomePage() {
     </React.Fragment>
   );
 }
+
+
+/*TODO
+- Implement Custom Error Pages: Create custom 404 and 500 error pages to enhance user experie*nce during unexpected errors.
+- Utilize the Metadata API: Define metadata directly in your page or layout files to improve SEO and social sharing. 
+DEV.TO https://dev.to/joodi/maximizing-seo-with-meta-data-in-nextjs-15-a-comprehensive-guide-4pa7?utm_source=chatgpt.com
+- Generate Dynamic Metadata: For dynamic pages, use the generateMetadata function to provide unique titles and descriptions based on content.
+- Set Up Security Headers: Configure HTTP security headers to prevent common vulnerabilities.
+*/

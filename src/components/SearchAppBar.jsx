@@ -27,7 +27,7 @@ import QrCode2Icon from "@mui/icons-material/QrCode2";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useRouter } from "next/navigation";
 import { useTheme } from "@mui/material/styles";
 
@@ -84,8 +84,9 @@ export default function SearchAppBar() {
 
   // 🔹 Handle Navigation
   const navigateTo = (path) => {
+    router.prefetch(path); // ✅ Prefetch route
     router.push(path);
-    setOpen(false); // Close dialog after navigation
+    setOpen(false);
   };
 
   // 🔹 Handle Menu Dialog Open/Close
@@ -203,6 +204,7 @@ export default function SearchAppBar() {
                 fullWidth
                 startIcon={<AccountBalanceWalletIcon />}
                 sx={{ justifyContent: "flex-start" }}
+                onMouseEnter={() => router.prefetch("/mensajes")} // ✅ Prefetch on hover
                 onClick={() => navigateTo("/mensajes")}
               >
                 Ver Pagos
@@ -213,6 +215,7 @@ export default function SearchAppBar() {
                 fullWidth
                 startIcon={<QrCode2Icon />}
                 sx={{ justifyContent: "flex-start" }}
+                onMouseEnter={() => router.prefetch("/form/msjPagoQR")} // ✅ Prefetch on hover
                 onClick={() => navigateTo("/form/msjPagoQR")}
               >
                 Crear Pago QR
@@ -223,6 +226,7 @@ export default function SearchAppBar() {
                 fullWidth
                 startIcon={<AccountCircleIcon />}
                 sx={{ justifyContent: "flex-start" }}
+                onMouseEnter={() => router.prefetch("/clientes")} // ✅ Prefetch on hover
                 onClick={() => navigateTo("/clientes")}
               >
                 Mis Datos
