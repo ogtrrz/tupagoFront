@@ -6,8 +6,11 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import Stack from "@mui/material/Stack";
 import NextLink from "next/link";
 import Image from "next/image";
+import Skeleton from "@mui/material/Skeleton";
 
 export default function MediaCard({ skill }) {
+  const [imageLoaded, setImageLoaded] = React.useState(false);
+
   const handleOnClick = () => {
     // router.push(`/view/${skill.skill}`);
   };
@@ -15,15 +18,28 @@ export default function MediaCard({ skill }) {
   return (
     <Card sx={{ maxWidth: 500 }}>
       <NextLink href={`/view/${skill.skill}`} title={skill.skill} passHref>
-        {/* ✅ Agregamos `sizes` para mejorar rendimiento */}
         <div style={{ position: "relative", width: "100%", height: "280px" }}>
+          {/* ✅ Show Skeleton while image loads */}
+          {!imageLoaded && (
+            <Skeleton
+              variant="rectangular"
+              width="100%"
+              height={280}
+              animation="wave"
+            />
+          )}
           <Image
             src={skill?.image}
             alt={skill.skill}
             fill
             sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 500px"
-            style={{ objectFit: "cover", borderRadius: "4px" }} // ✅ Ensure proper display
-            priority // ✅ Faster loading
+            style={{
+              objectFit: "cover",
+              borderRadius: "4px",
+              display: imageLoaded ? "block" : "none", // Hide image until loaded
+            }}
+            priority
+            onLoad={() => setImageLoaded(true)} // ✅ Set image as loaded
           />
         </div>
       </NextLink>

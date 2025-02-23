@@ -16,6 +16,9 @@ export default function DynamicBreadcrumbs() {
   // ❗️ Remove known non-page segments (Adjust this based on your directory structure)
   const ignoredSegments = ["view", "form"]; // Add more if needed
   const filteredSegments = pathSegments.filter((segment) => !ignoredSegments.includes(segment));
+  const capitalizeWords = (str) => {
+    return str.replace(/\b\w/g, (char) => char.toUpperCase());
+  }
 
   return (
     <Breadcrumbs
@@ -40,12 +43,12 @@ export default function DynamicBreadcrumbs() {
 
         return isLast ? (
           <Typography key={url} variant="body1" color="text.primary">
-            {decodeURIComponent(segment.replace("_", " "))}
+            {decodeURIComponent(capitalizeWords(segment.replace("_", " ")))}
           </Typography>
         ) : (
           <Link key={url} href={url} passHref>
             <Typography variant="body1" color="primary" sx={{ cursor: "pointer" }}>
-              {decodeURIComponent(segment.replace("_", " "))}
+              {decodeURIComponent(capitalizeWords(segment.replace("_", " ")))}
             </Typography>
           </Link>
         );
