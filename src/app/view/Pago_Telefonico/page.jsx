@@ -1,11 +1,19 @@
 // app/page.js (Server Component: Next.js App Router)
-
-import { Container, Box, Typography, List, ListItem, ListItemText } from "@mui/material";
+import Image from "next/image";
+import {
+  Container,
+  Box,
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+} from "@mui/material";
 
 // Metadatos para SEO (App Router)
 export const metadata = {
   title: "Pagos por Mensaje en Móviles",
-  description: "Descripción detallada sobre el método de pago por SMS o mensajería.",
+  description:
+    "Descripción detallada sobre el método de pago por SMS o mensajería.",
 };
 
 export default function PagosPorMensajePage() {
@@ -16,26 +24,25 @@ export default function PagosPorMensajePage() {
         Pagos por Mensaje en Móviles
       </Typography>
 
-      {/* Imagen de teléfono */}
       <Box
-        component="img"
-        src="/telefonico.webp"
-        alt="Teléfono"
-        sx={{
-          width: "100%",
-          maxWidth: 800,
-          display: "block",
-          margin: "0 auto",
-          mb: 3,
-        }}
-      />
+        sx={{ width: "100%", display: "flex", justifyContent: "center", mb: 3 }}
+      >
+        <Image
+          src="/telefonico.webp"
+          alt="Pagos Telefonicos"
+          width={800} // Define un ancho fijo
+          height={450} // Define un alto fijo proporcionalmente
+          style={{ borderRadius: "8px", objectFit: "cover" }} // Estilos adicionales
+        />
+      </Box>
 
       {/* Texto introductorio */}
       <Typography variant="body1" paragraph>
-        El pago por mensaje en móviles es un método de pago en el que los usuarios pueden
-        realizar transacciones enviando un mensaje de texto (SMS) o a través de aplicaciones
-        de mensajería. Este sistema se vincula con el saldo del operador móvil o con una
-        cuenta bancaria/tarjeta de crédito previamente configurada.
+        El pago por mensaje en móviles es un método de pago en el que los
+        usuarios pueden realizar transacciones enviando un mensaje de texto
+        (SMS) o a través de aplicaciones de mensajería. Este sistema se vincula
+        con el saldo del operador móvil o con una cuenta bancaria/tarjeta de
+        crédito previamente configurada.
       </Typography>
 
       {/* Sección: ¿Cómo funciona? */}
@@ -44,9 +51,7 @@ export default function PagosPorMensajePage() {
       </Typography>
       <List dense>
         <ListItem>
-          <ListItemText
-            primary="1. El usuario envía un mensaje de texto con un código específico a un número designado."
-          />
+          <ListItemText primary="1. El usuario envía un mensaje de texto con un código específico a un número designado." />
         </ListItem>
         <ListItem>
           <ListItemText
@@ -68,14 +73,10 @@ export default function PagosPorMensajePage() {
       </Typography>
       <List dense>
         <ListItem>
-          <ListItemText
-            primary="✅ Fácil y rápido: No se necesita ingresar datos bancarios ni instalar aplicaciones adicionales."
-          />
+          <ListItemText primary="✅ Fácil y rápido: No se necesita ingresar datos bancarios ni instalar aplicaciones adicionales." />
         </ListItem>
         <ListItem>
-          <ListItemText
-            primary="✅ Accesible: Disponible para personas sin tarjeta de crédito o cuenta bancaria."
-          />
+          <ListItemText primary="✅ Accesible: Disponible para personas sin tarjeta de crédito o cuenta bancaria." />
         </ListItem>
         <ListItem>
           <ListItemText
@@ -103,57 +104,53 @@ export default function PagosPorMensajePage() {
           />
         </ListItem>
         <ListItem>
-          <ListItemText
-            primary="📌 Pago de estacionamiento: Se envía un mensaje con el número de placa y se descuenta el importe."
-          />
+          <ListItemText primary="📌 Pago de estacionamiento: Se envía un mensaje con el número de placa y se descuenta el importe." />
         </ListItem>
         <ListItem>
-          <ListItemText
-            primary="📌 Donaciones a ONG: Enviar un SMS con una palabra clave para donar un monto específico."
-          />
+          <ListItemText primary="📌 Donaciones a ONG: Enviar un SMS con una palabra clave para donar un monto específico." />
         </ListItem>
         <ListItem>
-          <ListItemText
-            primary="📌 Compra de contenido digital: Juegos, tonos de llamada o suscripciones a plataformas de entretenimiento."
-          />
+          <ListItemText primary="📌 Compra de contenido digital: Juegos, tonos de llamada o suscripciones a plataformas de entretenimiento." />
         </ListItem>
       </List>
 
       {/* Conclusión / Texto adicional (versión detallada) */}
       <Typography variant="body1" paragraph sx={{ mt: 2 }}>
-        Este método es una opción innovadora para facilitar pagos sin depender de tarjetas
-        o aplicaciones bancarias. ¿Te gustaría saber más sobre su implementación en
-        negocios?
+        Este método es una opción innovadora para facilitar pagos sin depender
+        de tarjetas o aplicaciones bancarias. ¿Te gustaría saber más sobre su
+        implementación en negocios?
       </Typography>
 
       <Typography variant="h5" gutterBottom sx={{ mt: 4 }}>
         Explicación más Detallada
       </Typography>
       <Typography variant="body1" paragraph>
-        El pago por mensaje en móviles se puede dividir en dos grandes modalidades:
+        El pago por mensaje en móviles se puede dividir en dos grandes
+        modalidades:
       </Typography>
 
       <Typography variant="subtitle1" gutterBottom>
         1. Pago con cargo al saldo o factura del operador móvil
       </Typography>
       <Typography variant="body2" paragraph>
-        El monto de la compra se descuenta del saldo prepago del usuario o se adiciona a la 
-        factura telefónica de fin de mes. Esto facilita las microtransacciones sin introducir
-        datos bancarios.
+        El monto de la compra se descuenta del saldo prepago del usuario o se
+        adiciona a la factura telefónica de fin de mes. Esto facilita las
+        microtransacciones sin introducir datos bancarios.
       </Typography>
 
       <Typography variant="subtitle1" gutterBottom>
         2. Pago a través de una cuenta bancaria vinculada
       </Typography>
       <Typography variant="body2" paragraph>
-        Algunas plataformas permiten asociar la cuenta bancaria o tarjeta de crédito del 
-        usuario, cargando el pago directamente al banco y confirmando la transacción por SMS.
+        Algunas plataformas permiten asociar la cuenta bancaria o tarjeta de
+        crédito del usuario, cargando el pago directamente al banco y
+        confirmando la transacción por SMS.
       </Typography>
 
       <Typography variant="body1" paragraph sx={{ mt: 2 }}>
-        En resumen, los pagos por mensaje en móviles representan una alternativa eficiente, 
-        segura y accesible para aquellos que buscan una opción de pago sencilla, incluso sin 
-        conexión a Internet o sin tarjetas bancarias. 
+        En resumen, los pagos por mensaje en móviles representan una alternativa
+        eficiente, segura y accesible para aquellos que buscan una opción de
+        pago sencilla, incluso sin conexión a Internet o sin tarjetas bancarias.
       </Typography>
     </Container>
   );

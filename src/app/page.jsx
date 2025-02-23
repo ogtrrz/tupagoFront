@@ -15,7 +15,7 @@ export default function HomePage() {
         <MyHeaderPrincipal
           imageURL="/tupago.webp"
           label="TuPago.click, pagos fáciles y gratuitos, remotos o presentes, ES TODO"
-          altText="TuPago Service Preview"
+          altText="TuPago Servicios"
         />
       </Box>
 

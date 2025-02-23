@@ -77,7 +77,7 @@ const MyFooter = () => {
           <Stack direction="row" alignItems="center" gap={1}>
             <CookieIcon />
             <Typography variant="body2">
-              Cookies de sesión, autenticación
+              Cookies de sesión y autenticación.
             </Typography>
           </Stack>
         </Grid>

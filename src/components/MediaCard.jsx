@@ -1,30 +1,30 @@
 import * as React from "react";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-// import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import Stack from "@mui/material/Stack";
 import NextLink from "next/link";
-// import Image from "next/image";
-// import { useRouter } from "next/router";
-// import SocialShare from "@/components/SocialShare";
+import Image from "next/image";
 
 export default function MediaCard({ skill }) {
-	// const router = useRouter();
 	const handleOnClick = () => {
 		// router.push(`/view/${skill.skill}`);
 	};
+
 	return (
 		<Card sx={{ maxWidth: 500 }}>
 			<NextLink href={`/view/${skill.skill}`} title={skill.skill} passHref>
-				<CardMedia
-					sx={{ height: 280 }}
-					image={skill?.image}
-					title={skill.skill}
-				/>
+				{/* ✅ Replace CardMedia with next/image */}
+				<div style={{ position: "relative", width: "100%", height: "280px" }}>
+					<Image
+						src={skill?.image}
+						alt={skill.skill}
+						fill
+						style={{ objectFit: "cover", borderRadius: "4px" }} // ✅ Ensure proper display
+						priority // ✅ Faster loading
+					/>
+				</div>
 			</NextLink>
 			<CardContent>
 				<Stack direction='row' alignItems='center' gap={1}>
@@ -40,7 +40,7 @@ export default function MediaCard({ skill }) {
 						}}>
 						{skill.skill.replace("_", " ")}
 					</Typography>
-					<ArrowForwardIcon color='secondary'/>
+					<ArrowForwardIcon color='secondary' />
 				</Stack>
 
 				<Typography
@@ -56,9 +56,6 @@ export default function MediaCard({ skill }) {
 					{skill.profile}
 				</Typography>
 			</CardContent>
-			{/* <CardActions sx={{ ml: 1 }}>
-				<SocialShare skill={skill} />
-			</CardActions> */}
 		</Card>
 	);
 }
