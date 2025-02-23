@@ -261,6 +261,56 @@ export const data = {
 			keywords:
 				"Next.js, Next.js Development, Server-Side Rendering, Static Site Generation, React Integration, API Routes, Client-Side Routing, Data Fetching, Performance Optimization, Responsive Design, Accessibility, Testing, Webpack Configuration, Environment Variables, Serverless Deployments",
 		},
+		{
+			skill: "Circulo Verde",
+			image: "/circulo-verde.webp",
+			profile:
+				"I am a proficient Next.js developer with over 5 years of hands-on experience in building modern web applications. My technical knowledge spans various aspects of Next.js, enabling me to create high-performance and SEO-friendly web solutions that deliver exceptional user experiences.",
+			description: `Next.js Fundamentals: I possess a deep understanding of Next.js fundamentals, including server-side rendering (SSR), static site generation (SSG), and client-side routing, allowing me to build efficient and dynamic web applications.
+            
+            React Integration: I seamlessly integrate React components into Next.js applications, leveraging the power of React for building interactive user interfaces.
+            
+            Server-Side Rendering (SSR): I implement SSR in Next.js applications, improving SEO, performance, and initial page load times by rendering content on the server.
+            
+            Static Site Generation (SSG): I utilize SSG to pre-render pages at build time, reducing server load and enhancing content delivery.
+            
+            API Routes: I create API routes in Next.js to build custom serverless functions, enabling efficient data fetching and server-side logic.
+            
+            Routing: I implement client-side routing using Next.js's built-in router, providing a smooth navigation experience for single-page applications (SPAs).
+            
+            Data Fetching: I efficiently fetch data from various sources, including RESTful and GraphQL APIs, to populate Next.js pages with dynamic content.
+            
+            Optimizing Performance: I optimize Next.js applications for performance by implementing lazy loading, code splitting, and image optimization.
+            
+            Responsive Design: I design and develop responsive web applications that adapt seamlessly to different screen sizes and devices.
+            
+            Accessibility (a11y): I ensure that Next.js applications adhere to accessibility standards (WCAG), making them inclusive and user-friendly.
+            
+            Testing: I write comprehensive unit tests and integration tests for Next.js applications, ensuring code quality and reliability.
+            
+            Webpack Configuration: I customize Webpack configurations in Next.js to optimize build processes, bundle assets efficiently, and meet project-specific requirements.
+            
+            Environment Variables: I manage environment variables in Next.js applications for secure configuration and sensitive data storage.
+            
+            Serverless Deployments: I deploy Next.js applications to serverless platforms like Vercel and Netlify for automatic scaling and simplified hosting.
+            
+            With my extensive experience and expertise in Next.js, I am well-equipped to develop web applications that provide exceptional user experiences, performance, and SEO optimization. I bring a developer-centric approach to Next.js development, delivering high-quality and responsive solutions for your projects.`,
+			certifications: [
+				{
+					name: "Site Architecture.  100% Lighthouse",
+					issuer: "OmarGutierrez.net",
+					date: "3/21/2023",
+					urlCertification: "https://omargutierrez.net/Architecture",
+				},
+			],
+			github: [
+				{
+					url: "https://github.com/ogtrrz/rhv3",
+				},
+			],
+			keywords:
+				"Next.js, Next.js Development, Server-Side Rendering, Static Site Generation, React Integration, API Routes, Client-Side Routing, Data Fetching, Performance Optimization, Responsive Design, Accessibility, Testing, Webpack Configuration, Environment Variables, Serverless Deployments",
+		},
 		
 	],
 };
