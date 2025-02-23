@@ -9,6 +9,7 @@ import DynamicBreadcrumbs from "@/components/DynamicBreadcrumbs";
 // import { SessionProvider } from "next-auth/react";
 import SessionProviderWrapper from "@/app/providers/SessionProvider";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 export const metadata = {
   title: "TuPago.click, CoDi pagos gratuitos.",
@@ -41,6 +42,7 @@ export default function RootLayout({ children }) {
               </main>
               <MyFooter />
               <Analytics />
+              <SpeedInsights />
             </body>
           </SessionProviderWrapper>
         </ThemeProvider>
