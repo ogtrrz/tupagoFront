@@ -8,6 +8,7 @@ import MyFooter from "@/components/MyFooter";
 import DynamicBreadcrumbs from "@/components/DynamicBreadcrumbs";
 // import { SessionProvider } from "next-auth/react";
 import SessionProviderWrapper from "@/app/providers/SessionProvider";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata = {
   title: "TuPago.click, CoDi pagos gratuitos.",
@@ -26,11 +27,11 @@ export const viewport = {
 export default function RootLayout({ children }) {
   return (
     <html lang="es-MX">
-      <body>
-        <AppRouterCacheProvider>
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <SessionProviderWrapper>
+      <AppRouterCacheProvider>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <SessionProviderWrapper>
+            <body>
               <SearchAppBar />
               <main style={{ paddingTop: "80px" }}>
                 {" "}
@@ -39,10 +40,11 @@ export default function RootLayout({ children }) {
                 {children}
               </main>
               <MyFooter />
-            </SessionProviderWrapper>
-          </ThemeProvider>
-        </AppRouterCacheProvider>
-      </body>
+              <Analytics />
+            </body>
+          </SessionProviderWrapper>
+        </ThemeProvider>
+      </AppRouterCacheProvider>
     </html>
   );
 }
