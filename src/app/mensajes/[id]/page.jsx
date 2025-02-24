@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import { QRCodeCanvas } from "qrcode.react";
 import { requestEstatusQR } from "@/app/actions/requestEstatusQR"; // ✅ Import the server action
+import { requestEstatusCobroTelefonico } from "@/app/actions/requestEstatusCobroTelefonico";
 import { fetchMensajeById } from "@/app/actions/fetchMensajesById"; // ✅ Import the server action
 
 export default function MensajePage({ params }) {
@@ -47,9 +48,22 @@ export default function MensajePage({ params }) {
   const handleSolicitarEstatus = async () => {
     setLoading(true); // ✅ Start loading
     try {
-      const response = await requestEstatusQR(data.idMensajeCobro);
+      let response;
+      // console.log("data", data);
+
+      if (data?.idMensajeCobro?.length < 11) {
+        // ✅ Use existing QR request action
+        response = await requestEstatusQR(data.idMensajeCobro);
+      } else {
+        // ✅ Use new telefonic payment request action
+        response = await requestEstatusCobroTelefonico(data.idMensajeCobro);
+      }
+      // console.log("response", response);
+
       setEstatusResponse(response);
     } catch (err) {
+      console.log("err", err);
+
       setEstatusResponse({ error: "Error al solicitar el estatus" });
     } finally {
       setLoading(false); // ✅ Stop loading
@@ -126,35 +140,57 @@ export default function MensajePage({ params }) {
             </Button>
 
             {/* ✅ Display Estatus Response */}
-            {estatusResponse?.length > 0 && (
+            {estatusResponse && (
               <Box mt={2}>
-                <Typography variant="body1">
-                  <b>Estatus:</b> {estatusResponse?.length}
-                </Typography>
-                {estatusResponse.map((item, index) => (
-                  <Box
-                    key={index}
-                    sx={{
-                      mb: 1,
-                      p: 1,
-                      border: "1px solid #ccc",
-                      borderRadius: 2,
-                    }}
-                  >
-                    <Typography variant="body2">
-                      <b>Identificador:</b> {item.id}
+                {Array.isArray(estatusResponse) ? (
+                  // ✅ Handle the array response (Second Response)
+                  <>
+                    <Typography variant="body1">
+                      <b>Estatus:</b> {estatusResponse.length}
+                    </Typography>
+                    {estatusResponse.map((item, index) => (
+                      <Box
+                        key={index}
+                        sx={{
+                          mb: 1,
+                          p: 1,
+                          border: "1px solid #ccc",
+                          borderRadius: 2,
+                        }}
+                      >
+                        <Typography variant="body2">
+                          <b>Identificador:</b> {item.id}
+                        </Typography>
+                        <Typography variant="body2">
+                          <b>Rastreo:</b> {item.cr}
+                        </Typography>
+                        <Typography variant="body2">
+                          <b>Cuenta:</b> {item.c.nc}
+                        </Typography>
+                        <Typography variant="body2">
+                          <b>Cliente:</b> {item.c.nb}
+                        </Typography>
+                      </Box>
+                    ))}
+                  </>
+                ) : (
+                  // ✅ Handle the single object response (First Response)
+                  <>
+                    <Typography variant="body1">
+                      <b>Identificador:</b>{" "}
+                      {estatusResponse?.detalleResultado?.id}
                     </Typography>
                     <Typography variant="body2">
-                      <b>Rastreo:</b> {item.cr}
+                      <b>Rastreo:</b> {estatusResponse?.detalleResultado?.cr}
                     </Typography>
                     <Typography variant="body2">
-                      <b>Cuenta:</b> {item.c.nc}
+                      <b>Cuenta:</b> {estatusResponse?.detalleResultado?.c?.nc}
                     </Typography>
                     <Typography variant="body2">
-                      <b>Cliente:</b> {item.c.nb}
+                      <b>Cliente:</b> {estatusResponse?.detalleResultado?.c?.nb}
                     </Typography>
-                  </Box>
-                ))}
+                  </>
+                )}
               </Box>
             )}
           </Stack>

@@ -26,15 +26,12 @@ import WatchLaterSharpIcon from "@mui/icons-material/WatchLaterSharp";
 import CoffeeSharpIcon from "@mui/icons-material/CoffeeSharp";
 import { fetchMensajes } from "@/app/actions/fetchMensajes"; // ✅ Import server action
 
-const PAGE_SIZE = 10;
-
 export default function MensajesTable() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const page = parseInt(searchParams.get("page") ?? "1", 10);
   const [mensajes, setMensajes] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
-  const [totalMessages, setTotalMessages] = useState(0);
   const [loading, setLoading] = useState(true); // ✅ Add loading state
   const [error, setError] = useState(null);
 
@@ -42,13 +39,14 @@ export default function MensajesTable() {
     async function loadMensajes() {
       setLoading(true); // ✅ Show loading indicator
       try {
-        const { mensajes, totalMessages, totalPages, error } =
+        const { mensajes, totalPages, error } =
           await fetchMensajes(page - 1);
+          // console.log('mensajes', mensajes);
+          
 
         if (error) throw new Error(error);
 
         setMensajes(mensajes);
-        setTotalMessages(totalMessages);
         setTotalPages(totalPages);
       } catch (err) {
         setError(err.message);
@@ -79,7 +77,7 @@ export default function MensajesTable() {
   }
 
   return (
-    <>
+    <React.Fragment>
       <TableContainer component={Paper}>
         <Table aria-label="mensajes table">
           <TableHead>
@@ -144,15 +142,15 @@ export default function MensajesTable() {
                     justifyContent="flex-end"
                     alignItems="center"
                   >
-                    {mensaje.edoPet === 0 || mensaje.edoPet === 1 ? (
+                    {mensaje.extra10 === "0" || mensaje.extra10 === "1" ? (
                       <Tooltip title="Pagado" placement="left">
                         <PriceCheckSharpIcon sx={{ color: "#00B389" }} />
                       </Tooltip>
-                    ) : mensaje.edoPet === 2 ? (
+                    ) : mensaje.extra10 === "2" ? (
                       <Tooltip title="Denegado" placement="left">
                         <DoNotDisturbAltSharpIcon sx={{ color: "#FF0000" }} />
                       </Tooltip>
-                    ) : mensaje.edoPet === 4 ? (
+                    ) : mensaje.extra10 === "4" ? (
                       <Tooltip title="Pospuesto" placement="left">
                         <WatchLaterSharpIcon sx={{ color: "orange" }} />
                       </Tooltip>
@@ -199,6 +197,6 @@ export default function MensajesTable() {
           />
         </Box>
       )}
-    </>
+    </React.Fragment>
   );
 }

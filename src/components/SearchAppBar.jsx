@@ -28,6 +28,7 @@ import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import SendToMobileIcon from '@mui/icons-material/SendToMobile';
 import { useRouter } from "next/navigation";
 import { useTheme } from "@mui/material/styles";
 
@@ -219,6 +220,17 @@ export default function SearchAppBar() {
                 onClick={() => navigateTo("/form/msjPagoQR")}
               >
                 Crear Pago QR
+              </Button>
+              <Button
+                variant="outlined"
+                color="secondary"
+                fullWidth
+                startIcon={<SendToMobileIcon />}
+                sx={{ justifyContent: "flex-start" }}
+                onMouseEnter={() => router.prefetch("/form/msjPagoTel")} // ✅ Prefetch on hover
+                onClick={() => navigateTo("/form/msjPagoTel")}
+              >
+                Crear Pago Telefónico
               </Button>
               <Button
                 variant="outlined"
