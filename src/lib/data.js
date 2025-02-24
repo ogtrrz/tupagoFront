@@ -262,7 +262,7 @@ export const data = {
 				"Next.js, Next.js Development, Server-Side Rendering, Static Site Generation, React Integration, API Routes, Client-Side Routing, Data Fetching, Performance Optimization, Responsive Design, Accessibility, Testing, Webpack Configuration, Environment Variables, Serverless Deployments",
 		},
 		{
-			skill: "Circulo Verde",
+			skill: "Circulo_Verde",
 			image: "/circulo-verde.webp",
 			profile:
 				"I am a proficient Next.js developer with over 5 years of hands-on experience in building modern web applications. My technical knowledge spans various aspects of Next.js, enabling me to create high-performance and SEO-friendly web solutions that deliver exceptional user experiences.",
