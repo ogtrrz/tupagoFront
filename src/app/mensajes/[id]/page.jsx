@@ -13,19 +13,20 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { QRCodeCanvas } from "qrcode.react";
-import { requestEstatusQR } from "@/app/actions/requestEstatusQR"; // ✅ Import the server action
+import { requestEstatusQR } from "@/app/actions/requestEstatusQR";
 import { requestEstatusCobroTelefonico } from "@/app/actions/requestEstatusCobroTelefonico";
-import { fetchMensajeById } from "@/app/actions/fetchMensajesById"; // ✅ Import the server action
+import { fetchMensajeById } from "@/app/actions/fetchMensajesById";
+import CallbacksList from "@/components/CallbacksList";
 
 export default function MensajePage({ params }) {
-  const resolvedParams = use(params); // ✅ Use `use()` to unwrap the Promise
+  const resolvedParams = use(params);
   const { id } = resolvedParams;
 
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [estatusResponse, setEstatusResponse] = useState(null);
   const [openSnackbar, setOpenSnackbar] = useState(false);
-  const [loading, setLoading] = useState(false); // ✅ Loading state
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function loadData() {
@@ -40,48 +41,42 @@ export default function MensajePage({ params }) {
     loadData();
   }, [id]);
 
-    // ✅ Show loading indicator while fetching data
-    if (!data) {
-      return (
-        <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          height="100vh"
-        >
-          <CircularProgress size={50} />
-        </Box>
-      );
-    }
-  
-    if (error) {
-      return <Typography color="error">Error: {error}</Typography>;
-    }
+  if (!data) {
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="100vh"
+      >
+        <CircularProgress size={50} />
+      </Box>
+    );
+  }
 
+  if (error) {
+    return <Typography color="error">Error: {error}</Typography>;
+  }
+  console.log("data", data.extra6);
   const hasCelular = data.numeroCelular && data.numeroCelular.trim() !== "";
+  const hasExtra6Data = data.extra6 && data.extra6.trim() !== "";
 
   const handleSolicitarEstatus = async () => {
-    setLoading(true); // ✅ Start loading
+    setLoading(true);
     try {
       let response;
-      // console.log("data", data);
 
       if (data?.idMensajeCobro?.length < 11) {
-        // ✅ Use existing QR request action
         response = await requestEstatusQR(data.idMensajeCobro);
       } else {
-        // ✅ Use new telefonic payment request action
         response = await requestEstatusCobroTelefonico(data.idMensajeCobro);
       }
-      // console.log("response", response);
 
       setEstatusResponse(response);
     } catch (err) {
-      console.log("err", err);
-
       setEstatusResponse({ error: "Error al solicitar el estatus" });
     } finally {
-      setLoading(false); // ✅ Stop loading
+      setLoading(false);
       setOpenSnackbar(true);
     }
   };
@@ -143,13 +138,20 @@ export default function MensajePage({ params }) {
               </Box>
             )}
 
+            {/* ✅ CallbacksList is only shown if extra6 has data */}
+            {hasExtra6Data && (
+              <Box mt={2}>
+                <CallbacksList idsString={data.extra6} />
+              </Box>
+            )}
+
             {/* ✅ Button with Loading Indicator */}
             <Button
               variant="contained"
               color="primary"
               onClick={handleSolicitarEstatus}
-              disabled={loading} // ✅ Disable while loading
-              startIcon={loading ? <CircularProgress size={20} /> : null} // ✅ Show loader
+              disabled={loading}
+              startIcon={loading ? <CircularProgress size={20} /> : null}
             >
               {loading ? "Solicitando..." : "Solicitar Estatus"}
             </Button>
@@ -158,7 +160,6 @@ export default function MensajePage({ params }) {
             {estatusResponse && (
               <Box mt={2}>
                 {Array.isArray(estatusResponse) ? (
-                  // ✅ Handle the array response (Second Response)
                   <>
                     <Typography variant="body1">
                       <b>Estatus:</b> {estatusResponse.length}
@@ -189,7 +190,6 @@ export default function MensajePage({ params }) {
                     ))}
                   </>
                 ) : (
-                  // ✅ Handle the single object response (First Response)
                   <>
                     <Typography variant="body1">
                       <b>Identificador:</b>{" "}

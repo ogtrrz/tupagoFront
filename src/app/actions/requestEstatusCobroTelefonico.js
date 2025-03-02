@@ -19,8 +19,8 @@ export async function requestEstatusCobroTelefonico(idMsjdeCobro) {
           "Content-Type": "application/json",
           Authorization: `Bearer ${session.accessToken}`, // ✅ Use NextAuth JWT token
         },
-        body: JSON.stringify({ idc: "318988a825" }), //JSON.stringify({ idc }), //TODO modificar pruebas estatus
-        body: JSON.stringify({ idMsjdeCobro: "6fe21356fd306c6c56fo" }), //body: JSON.stringify({ idMsjdeCobro }),
+        body: JSON.stringify({ idc }), //TODO modificar pruebas estatus
+        body: JSON.stringify({ idMsjdeCobro }),
       }
     );
 

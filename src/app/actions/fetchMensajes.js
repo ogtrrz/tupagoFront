@@ -15,7 +15,7 @@ export async function fetchMensajes(page = 0) {
 
     const requestUrl = `${process.env.JSONPATH}mensajesadd?page=${page}&size=${PAGE_SIZE}&eagerload=true`;
 
-    console.log("🔹 Fetching Mensajes:", requestUrl);
+    // console.log("🔹 Fetching Mensajes:", requestUrl);
 
     // Fetch paginated messages
     const res = await fetch(requestUrl, {
