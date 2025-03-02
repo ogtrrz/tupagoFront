@@ -40,8 +40,23 @@ export default function MensajePage({ params }) {
     loadData();
   }, [id]);
 
-  if (error) return <Typography color="error">{error}</Typography>;
-  if (!data) return <Typography>Cargando...</Typography>;
+    // ✅ Show loading indicator while fetching data
+    if (!data) {
+      return (
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          height="100vh"
+        >
+          <CircularProgress size={50} />
+        </Box>
+      );
+    }
+  
+    if (error) {
+      return <Typography color="error">Error: {error}</Typography>;
+    }
 
   const hasCelular = data.numeroCelular && data.numeroCelular.trim() !== "";
 

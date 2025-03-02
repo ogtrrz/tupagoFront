@@ -11,7 +11,7 @@ export async function requestEstatusQR(idc) {
       throw new Error("No existe sesión autenticada.");
     }
 
-    console.log("🔹 Using Access Token:", session.accessToken);
+    // console.log("🔹 Using Access Token:", session.accessToken);
 
     // ✅ Make request using NextAuth token
     const response = await fetch(
@@ -45,7 +45,7 @@ export async function requestEstatusQR(idc) {
         },
       }));
 
-    console.log("✅ Valid CR Data:", validCRData);
+    // console.log("✅ Valid CR Data:", validCRData);
     return validCRData; // ✅ Return filtered array
   } catch (error) {
     console.error("❌ Error in requestEstatusQR:", error.message);
