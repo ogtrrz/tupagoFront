@@ -11,7 +11,7 @@ export async function sendMensajePagoQR(formData) {
       throw new Error("No existe sesión autenticada.");
     }
 
-    console.log("🔹 Using Access Token:", session.accessToken);
+    // console.log("🔹 Using Access Token:", session.accessToken);
 
     // ✅ Send the API request with the NextAuth token
     const response = await fetch(
@@ -33,7 +33,7 @@ export async function sendMensajePagoQR(formData) {
 
     // ✅ Return the actual API response
     const responseData = await response.json();
-    console.log("✅ Payment Response:", responseData);
+    // console.log("✅ Payment Response:", responseData);
     return responseData;
   } catch (error) {
     console.error("❌ Error in sendMensajePagoQR:", error.message);

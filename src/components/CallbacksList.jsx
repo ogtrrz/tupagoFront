@@ -15,13 +15,13 @@ export default function CallbacksList({ idsString }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  console.log("component extra6", idsString);
+  // console.log("component extra6", idsString);
 
   useEffect(() => {
     async function loadData() {
       try {
         const response = await fetchCallbacks(idsString);
-        console.log("response extra6", response);
+        // console.log("response extra6", response);
 
         if (response?.error) {
           setError(response.error);

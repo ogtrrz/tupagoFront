@@ -4,7 +4,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route"; // Import NextAuth config
 
 export async function fetchCallbacks(idsString) {
-  console.log("idsString", idsString);
+  // console.log("idsString", idsString);
 
   try {
     // Handle null, empty, or undefined input
@@ -20,7 +20,7 @@ export async function fetchCallbacks(idsString) {
     const requestUrl = `${
       process.env.JSONPATH
     }callbacksadd?ids=${encodeURIComponent(idsString)}`;
-    console.log("🔹 Fetching Mensajes:", requestUrl);
+    // console.log("🔹 Fetching Mensajes:", requestUrl);
 
     // Make the API request
     const response = await fetch(requestUrl, {
@@ -37,7 +37,7 @@ export async function fetchCallbacks(idsString) {
     }
 
     const extra6 = await response.json();
-    console.log("extra6", extra6);
+    // console.log("extra6", extra6);
     return extra6;
   } catch (error) {
     console.error("❌ Error fetching callbacks:", error);

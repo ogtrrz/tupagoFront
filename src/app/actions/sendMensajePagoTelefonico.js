@@ -12,7 +12,7 @@ export async function sendMensajePagoTelefonico(formData) {
       throw new Error("No existe sesión autenticada.");
     }
 
-    console.log("🔹 Using Access Token:", session.accessToken);
+    // console.log("🔹 Using Access Token:", session.accessToken);
 
     // ✅ Send request to backend
     const res = await fetch(`${process.env.JSONPATH }payments/msjpagotelefonicousuario`, {

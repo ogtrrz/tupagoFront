@@ -20,7 +20,7 @@ export async function apiRequest(method, endpoint, data = null) {
             options.body = JSON.stringify(data);
         }
 
-        console.log(`🔗 Requesting: ${method} ${apiUrl}`);
+        // console.log(`🔗 Requesting: ${method} ${apiUrl}`);
         const response = await fetch(apiUrl, options);
 
         if (!response.ok) {
