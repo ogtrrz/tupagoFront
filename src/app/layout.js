@@ -42,7 +42,7 @@ export default function RootLayout({ children }) {
               </main>
               <MyFooter />
               <Analytics />
-              <SpeedInsights />
+              <SpeedInsights /> 
             </body>
           </SessionProviderWrapper>
         </ThemeProvider>
