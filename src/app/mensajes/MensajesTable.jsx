@@ -142,15 +142,15 @@ export default function MensajesTable() {
                     justifyContent="flex-end"
                     alignItems="center"
                   >
-                    {mensaje.extra10 === "0" || mensaje.extra10 === "1" ? (
+                    {mensaje.extra7 === "0" || mensaje.extra7 === "1" ? (
                       <Tooltip title="Pagado" placement="left">
                         <PriceCheckSharpIcon sx={{ color: "#00B389" }} />
                       </Tooltip>
-                    ) : mensaje.extra10 === "2" ? (
+                    ) : mensaje.extra7 === "2" ? (
                       <Tooltip title="Denegado" placement="left">
                         <DoNotDisturbAltSharpIcon sx={{ color: "#FF0000" }} />
                       </Tooltip>
-                    ) : mensaje.extra10 === "4" ? (
+                    ) : mensaje.extra7 === "4" ? (
                       <Tooltip title="Pospuesto" placement="left">
                         <WatchLaterSharpIcon sx={{ color: "orange" }} />
                       </Tooltip>

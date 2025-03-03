@@ -11,7 +11,13 @@ import {
   Snackbar,
   Alert,
   CircularProgress,
+  Tooltip,
 } from "@mui/material";
+import PriceCheckSharpIcon from "@mui/icons-material/PriceCheckSharp";
+import DoNotDisturbAltSharpIcon from "@mui/icons-material/DoNotDisturbAltSharp";
+import WatchLaterSharpIcon from "@mui/icons-material/WatchLaterSharp";
+import CoffeeSharpIcon from "@mui/icons-material/CoffeeSharp";
+
 import { QRCodeCanvas } from "qrcode.react";
 import { requestEstatusQR } from "@/app/actions/requestEstatusQR";
 import { requestEstatusCobroTelefonico } from "@/app/actions/requestEstatusCobroTelefonico";
@@ -57,7 +63,7 @@ export default function MensajePage({ params }) {
   if (error) {
     return <Typography color="error">Error: {error}</Typography>;
   }
-  console.log("data", data.extra6);
+  // console.log("mensaje", data);
   const hasCelular = data.numeroCelular && data.numeroCelular.trim() !== "";
   const hasExtra6Data = data.extra6 && data.extra6.trim() !== "";
 
@@ -71,7 +77,7 @@ export default function MensajePage({ params }) {
       } else {
         response = await requestEstatusCobroTelefonico(data.idMensajeCobro);
       }
-
+      // console.log("Estatus", response);
       setEstatusResponse(response);
     } catch (err) {
       setEstatusResponse({ error: "Error al solicitar el estatus" });
@@ -175,22 +181,64 @@ export default function MensajePage({ params }) {
                         }}
                       >
                         <Typography variant="body2">
+                          <b>Cliente:</b> {item.c.nb}
+                        </Typography>
+                        <Typography variant="body2">
                           <b>Identificador:</b> {item.id}
                         </Typography>
                         <Typography variant="body2">
                           <b>Rastreo:</b> {item.cr}
                         </Typography>
                         <Typography variant="body2">
-                          <b>Cuenta:</b> {item.c.nc}
+                          <b>Cuenta:</b> {item.c.cb}
                         </Typography>
-                        <Typography variant="body2">
-                          <b>Cliente:</b> {item.c.nb}
+                        <Typography
+                          variant="body2"
+                          display="flex"
+                          alignItems="center"
+                        >
+                          <b>Pago:</b>&nbsp;
+                          {item.e == "1" ? (
+                            <Tooltip title="Pagado" placement="top">
+                              <PriceCheckSharpIcon
+                                sx={{ color: "#00B389", mr: 1 }}
+                              />
+                            </Tooltip>
+                          ) : item.e == "2" ? (
+                            <Tooltip title="Denegado" placement="top">
+                              <DoNotDisturbAltSharpIcon
+                                sx={{ color: "#FF0000", mr: 1 }}
+                              />
+                            </Tooltip>
+                          ) : item.e == "4" ? (
+                            <Tooltip title="Pospuesto" placement="top">
+                              <WatchLaterSharpIcon
+                                sx={{ color: "orange", mr: 1 }}
+                              />
+                            </Tooltip>
+                          ) : (
+                            <Tooltip title="No visto" placement="top">
+                              <CoffeeSharpIcon
+                                sx={{ color: "#568BFF", mr: 1 }}
+                              />
+                            </Tooltip>
+                          )}
+                          {item.e == "1"
+                            ? "Pagado"
+                            : item.e == "2"
+                            ? "Denegado"
+                            : item.e == "4"
+                            ? "Pospuesto"
+                            : "No visto"}
                         </Typography>
                       </Box>
                     ))}
                   </>
                 ) : (
                   <>
+                    <Typography variant="body2">
+                      <b>Cliente:</b> {estatusResponse?.detalleResultado?.c?.nb}
+                    </Typography>
                     <Typography variant="body1">
                       <b>Identificador:</b>{" "}
                       {estatusResponse?.detalleResultado?.id}
@@ -199,10 +247,7 @@ export default function MensajePage({ params }) {
                       <b>Rastreo:</b> {estatusResponse?.detalleResultado?.cr}
                     </Typography>
                     <Typography variant="body2">
-                      <b>Cuenta:</b> {estatusResponse?.detalleResultado?.c?.nc}
-                    </Typography>
-                    <Typography variant="body2">
-                      <b>Cliente:</b> {estatusResponse?.detalleResultado?.c?.nb}
+                      <b>Cuenta:</b> {estatusResponse?.detalleResultado?.c?.cb}
                     </Typography>
                   </>
                 )}

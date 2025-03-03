@@ -32,6 +32,8 @@ export async function requestEstatusQR(idc) {
     }
 
     const responseData = await response.json(); // ✅ Parse JSON response
+    // console.log('Estatus', responseData);
+    
 
     // ✅ Process valid `cr` data
     const validCRData = responseData
@@ -39,9 +41,11 @@ export async function requestEstatusQR(idc) {
       .map((item) => ({
         id: item.id, // ✅ Extract ID
         cr: item.cr, // ✅ Extract Clave de Rastreo (cr)
+        e: item.e,
         c: {
           nc: item.c?.nc || "N/A", // ✅ Extract nc (numero de cuenta) safely
           nb: item.c?.nb || "N/A", // ✅ Extract nb (nombre del banco) safely
+          cb: item.c?.cb || "N/A", // ✅ Extract nb (nombre del banco) safely
         },
       }));
 
