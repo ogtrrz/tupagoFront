@@ -14,7 +14,7 @@ export default function DynamicBreadcrumbs() {
   const pathSegments = pathname.split("/").filter((segment) => segment);
 
   // ❗️ Remove known non-page segments (Adjust this based on your directory structure)
-  const ignoredSegments = ["view", "form"]; // Add more if needed
+  const ignoredSegments = ["view", "form", "secure", "tupago"]; // Add more if needed
   const filteredSegments = pathSegments.filter((segment) => !ignoredSegments.includes(segment));
   const capitalizeWords = (str) => {
     return str.replace(/\b\w/g, (char) => char.toUpperCase());

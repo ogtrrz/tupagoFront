@@ -24,5 +24,5 @@ export async function middleware(request) {
 
 // ✅ Ensure middleware applies only to protected routes
 export const config = {
-  matcher: ["/form/:path*", "/clientes/:path*", "/mensajes/:path*"],
+  matcher: ["/form/:path*", "/clientes/:path*", "/mensajes/:path*", "/secure/:path*"],
 };
