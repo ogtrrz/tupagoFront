@@ -19,10 +19,11 @@ export async function requestEstatusCobroTelefonico(idMsjdeCobro) {
           "Content-Type": "application/json",
           Authorization: `Bearer ${session.accessToken}`, // ✅ Use NextAuth JWT token
         },
-        body: JSON.stringify({ idc }), //TODO modificar pruebas estatus
         body: JSON.stringify({ idMsjdeCobro }),
       }
     );
+
+    console.log("response estmsjtel", JSON.stringify(response));
 
     if (!response.ok) {
       const errorMessage = await response.text();
