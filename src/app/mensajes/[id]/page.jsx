@@ -273,7 +273,7 @@ export default function MensajePage({ params }) {
                             sx={{ color: "orange", mr: 1 }}
                           />
                         </Tooltip>
-                      ) : (
+                      ) : ( 
                         <Tooltip title="No visto" placement="top">
                           <CoffeeSharpIcon sx={{ color: "#568BFF", mr: 1 }} />
                         </Tooltip>
