@@ -249,6 +249,43 @@ export default function MensajePage({ params }) {
                     <Typography variant="body2">
                       <b>Cuenta:</b> {estatusResponse?.detalleResultado?.c?.cb}
                     </Typography>
+                    <Typography
+                      variant="body2"
+                      display="flex"
+                      alignItems="center"
+                    >
+                      <b>Pago:</b>
+                      {estatusResponse?.detalleResultado?.e == "1" ? (
+                        <Tooltip title="Pagado" placement="top">
+                          <PriceCheckSharpIcon
+                            sx={{ color: "#00B389", mr: 1 }}
+                          />
+                        </Tooltip>
+                      ) : estatusResponse?.detalleResultado?.e == "2" ? (
+                        <Tooltip title="Denegado" placement="top">
+                          <DoNotDisturbAltSharpIcon
+                            sx={{ color: "#FF0000", mr: 1 }}
+                          />
+                        </Tooltip>
+                      ) : estatusResponse?.detalleResultado?.e == "4" ? (
+                        <Tooltip title="Pospuesto" placement="top">
+                          <WatchLaterSharpIcon
+                            sx={{ color: "orange", mr: 1 }}
+                          />
+                        </Tooltip>
+                      ) : (
+                        <Tooltip title="No visto" placement="top">
+                          <CoffeeSharpIcon sx={{ color: "#568BFF", mr: 1 }} />
+                        </Tooltip>
+                      )}
+                      {estatusResponse?.detalleResultado?.e == "1"
+                        ? "Pagado"
+                        : estatusResponse?.detalleResultado?.e == "2"
+                        ? "Denegado"
+                        : estatusResponse?.detalleResultado?.e == "4"
+                        ? "Pospuesto"
+                        : "No visto"}
+                    </Typography>
                   </>
                 )}
               </Box>
