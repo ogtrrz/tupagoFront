@@ -18,6 +18,7 @@ import {
 import { QRCodeCanvas } from "qrcode.react";
 import { sendMensajePagoQR } from "@/app/actions/sendMensajePagoQR"; // Import server action
 import { useRouter } from "next/navigation"; // ✅ Import useRouter for navigation
+import { mailMensajePagoQR } from "@/app/actions/mailMensajePagoQR"; // ✅ Updated import
 
 export default function MensajePagoQRForm() {
   const [formData, setFormData] = useState({
@@ -61,35 +62,44 @@ export default function MensajePagoQRForm() {
     setFormData({ ...formData, [name]: value });
   };
 
-  // Handle Form Submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // ✅ Prevent form submission if email is invalid
     if (emailError) return;
 
     setLoading(true);
     setError(null);
 
-    const result = await sendMensajePagoQR(formData);
+    try {
+      // ✅ STEP 1: Send the payment data to create the QR
+      const qrResponse = await sendMensajePagoQR(formData);
 
-    if (result.error) {
-      setError(result.error);
-    } else {
-      setQrData(JSON.stringify(result, null, 2)); // Save response data
-      setDialogOpen(true); // Open QR Dialog
+      console.log("✅ QR Response:", qrResponse); // Debugging
 
-      setFormData({
-        monto: "",
-        concepto: "",
-        referenciaNumerica: "",
-        nombreCliente: "",
-        email: "",
-        vigencia: "",
+      if (qrResponse.error) {
+        throw new Error(qrResponse.error);
+      }
+
+      // ✅ STEP 2: Update State and Open Modal
+      setQrData(JSON.stringify(qrResponse, null, 2));
+      setDialogOpen(true);
+
+      // ✅ STEP 3: Send Email with the QR Data
+      const emailResponse = await mailMensajePagoQR({
+        ...formData,
+        qrData: qrResponse, // Pass the QR response to the email function
       });
-    }
 
-    setLoading(false);
+      console.log("✅ Email Response:", emailResponse); // Debugging
+
+      if (emailResponse.error) {
+        throw new Error(emailResponse.error);
+      }
+    } catch (err) {
+      console.error("❌ Error:", err.message);
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleNewMessage = () => {
@@ -164,7 +174,7 @@ export default function MensajePagoQRForm() {
             <TextField
               fullWidth
               margin="normal"
-              label="Email"
+              label="Correo Electrónico"
               name="email"
               type="email"
               value={formData.email}

@@ -10,12 +10,11 @@ export async function fetchMensajes(page = 0) {
     // Get authentication session
     const session = await getServerSession(authOptions);
     if (!session || !session.accessToken) {
-      throw new Error("No authentication session found.");
+      console.error("🔴 No authentication session found");
+      throw new Error("AUTH_REQUIRED"); // ✅ Throw an error instead of redirecting
     }
 
     const requestUrl = `${process.env.JSONPATH}mensajesadd?page=${page}&size=${PAGE_SIZE}&eagerload=true`;
-
-    // console.log("🔹 Fetching Mensajes:", requestUrl);
 
     // Fetch paginated messages
     const res = await fetch(requestUrl, {
@@ -27,23 +26,24 @@ export async function fetchMensajes(page = 0) {
       cache: "no-store", // ✅ Always fetch fresh data
     });
 
-    if (!res.ok) {
-      throw new Error(`Failed to fetch messages: ${res.status} ${res.statusText}`);
+    if (res.status === 401) {
+      console.warn("🔴 Unauthorized (401)");
+      throw new Error("AUTH_REQUIRED"); 
     }
 
-    // ✅ Log ALL response headers
-    // console.log("🔹 Response Headers:", [...res.headers.entries()]);
+    if (!res.ok) {
+      throw new Error(`Intentelo más tarde: ${res.status} ${res.statusText}`);
+    }
 
     // ✅ Retrieve total messages correctly
     const totalMessages =
-      parseInt(res.headers.get("X-Total-Count") || res.headers.get("x-total-count")) || 0;
-
-    // console.log("✅ Total Messages from Headers:", totalMessages);
+      parseInt(
+        res.headers.get("X-Total-Count") || res.headers.get("x-total-count")
+      ) || 0;
 
     const totalPages = Math.ceil(totalMessages / PAGE_SIZE);
     const data = await res.json();
     console.log("size", data.length);
-    
 
     return {
       mensajes: data,
@@ -52,6 +52,8 @@ export async function fetchMensajes(page = 0) {
     };
   } catch (error) {
     console.error("❌ Error fetching mensajes:", error);
+
+    // ✅ Return error message to the client
     return { error: error.message };
   }
 }

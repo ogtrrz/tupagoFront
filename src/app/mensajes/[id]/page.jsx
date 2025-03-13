@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, use } from "react";
+import { useRouter } from "next/navigation";
 import {
   Card,
   CardContent,
@@ -27,7 +28,7 @@ import CallbacksList from "@/components/CallbacksList";
 export default function MensajePage({ params }) {
   const resolvedParams = use(params);
   const { id } = resolvedParams;
-
+  const router = useRouter();
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [estatusResponse, setEstatusResponse] = useState(null);
@@ -37,7 +38,10 @@ export default function MensajePage({ params }) {
   useEffect(() => {
     async function loadData() {
       const responseData = await fetchMensajeById(id);
-      if (responseData?.error) {
+      if (responseData?.error === "AUTH_REQUIRED") {
+        // console.error("🔴 User is not authenticated. Redirecting to login...");
+        router.push("/login"); // ✅ Redirect to login on 401
+      } else if (responseData?.error) {
         setError(responseData.error);
       } else {
         setData(responseData);
@@ -51,9 +55,10 @@ export default function MensajePage({ params }) {
     return (
       <Box
         display="flex"
-        justifyContent="center"
-        alignItems="center"
-        height="100vh"
+        justifyContent="center" // Centers horizontally
+        alignItems="flex-start" // Aligns to the top
+        minHeight="100vh"
+        paddingTop={4} // Optional: Adds some space from the top
       >
         <CircularProgress size={50} />
       </Box>
@@ -91,8 +96,9 @@ export default function MensajePage({ params }) {
     <Box
       display="flex"
       justifyContent="center"
-      alignItems="center"
+      alignItems="flex-start"
       minHeight="100vh"
+      paddingTop={4}
     >
       <Card sx={{ width: 400, p: 3, boxShadow: 3 }}>
         <CardContent>
@@ -273,7 +279,7 @@ export default function MensajePage({ params }) {
                             sx={{ color: "orange", mr: 1 }}
                           />
                         </Tooltip>
-                      ) : ( 
+                      ) : (
                         <Tooltip title="No visto" placement="top">
                           <CoffeeSharpIcon sx={{ color: "#568BFF", mr: 1 }} />
                         </Tooltip>

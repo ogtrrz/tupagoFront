@@ -43,11 +43,13 @@ export default function MensajesTable() {
           await fetchMensajes(page - 1);
           // console.log('mensajes', mensajes);
           
-
-        if (error) throw new Error(error);
-
-        setMensajes(mensajes);
-        setTotalPages(totalPages);
+        if (error === "AUTH_REQUIRED") {
+          // console.error("🔴 User is not authenticated. Redirecting to login...");
+          router.push("/login"); // ✅ Redirect to login on 401
+        } else {
+          setMensajes(mensajes);
+          setTotalPages(totalPages);
+        }
       } catch (err) {
         setError(err.message);
       } finally {

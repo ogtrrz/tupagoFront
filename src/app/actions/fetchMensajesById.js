@@ -8,7 +8,7 @@ export async function fetchMensajeById(id) {
     // Get authentication session
     const session = await getServerSession(authOptions);
     if (!session || !session.accessToken) {
-      throw new Error("No authentication session found.");
+      throw new Error("AUTH_REQUIRED"); 
     }
 
     // Make the API request
@@ -21,8 +21,13 @@ export async function fetchMensajeById(id) {
       cache: "no-store", // Always fetch fresh data
     });
 
+    if (res.status === 401) {
+      console.warn("🔴 Unauthorized (401).");
+      throw new Error("AUTH_REQUIRED"); 
+    }
+
     if (!res.ok) {
-      throw new Error(`Failed to fetch message: ${res.statusText}`);
+      throw new Error(`Intentelo mas tarde: ${res.statusText}`);
     }
 
     const data = await res.json();
