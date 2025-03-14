@@ -40,3 +40,14 @@ a {
     color-scheme: dark;
   }
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Roboto+Condensed:wght@300;400;700&display=swap');
+
+body {
+  font-family: 'Roboto Condensed', sans-serif; /* ✅ Fuente predeterminada */
+}
+
+h1, h2, h3, h4, h5, h6, button {
+  font-family: 'Open Sans', sans-serif; /* ✅ Títulos, subtítulos y botones */
+}
+

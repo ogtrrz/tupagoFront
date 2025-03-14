@@ -11,7 +11,8 @@ import PolicyIcon from "@mui/icons-material/Policy";
 import ArchitectureIcon from "@mui/icons-material/Architecture";
 import ContactMailIcon from "@mui/icons-material/ContactMail";
 import CookieIcon from "@mui/icons-material/Cookie";
-import PermContactCalendarIcon from '@mui/icons-material/PermContactCalendar';
+import PermContactCalendarIcon from "@mui/icons-material/PermContactCalendar";
+import CoDiText from "./CoDiText";
 
 // TODO autorizado por llenarlo con datos banxico y logo de CoDi
 
@@ -53,9 +54,7 @@ const MyFooter = () => {
             }}
           >
             <PermContactCalendarIcon />
-            <Typography variant="body2">
-              Datos de Contacto.
-            </Typography>
+            <Typography variant="body2">Datos de Contacto.</Typography>
             <ArrowForwardIcon />
           </Stack>
           <Stack
@@ -131,6 +130,9 @@ const MyFooter = () => {
           <Typography variant="body2">© 2025 TuPago.click.</Typography>
         </Grid>
       </Grid>
+      <Box component="section" sx={{ p: 2 }}>
+        <CoDiText />
+      </Box>
     </React.Fragment>
   );
 };

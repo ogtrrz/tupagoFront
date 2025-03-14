@@ -4,6 +4,7 @@ import * as React from "react";
 import { useState } from "react";
 import { styled, alpha } from "@mui/material/styles";
 import { signOut, useSession } from "next-auth/react";
+import Image from "next/image";
 import {
   AppBar,
   Box,
@@ -28,7 +29,7 @@ import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import SendToMobileIcon from '@mui/icons-material/SendToMobile';
+import SendToMobileIcon from "@mui/icons-material/SendToMobile";
 import { useRouter } from "next/navigation";
 import { useTheme } from "@mui/material/styles";
 
@@ -98,18 +99,27 @@ export default function SearchAppBar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed">
         <Toolbar>
-          {/* ✅ Hide Menu Button if not logged in */}
-          {session && (
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              sx={{ mr: 2 }}
-              onClick={handleClickOpen}
-            >
-              <MenuIcon />
-            </IconButton>
-          )}
+          <Box display="flex" alignItems="center" gap={2}>
+            <Image
+              src="/codi.webp"
+              alt="Codi TuPago.click"
+              width={45} // Define un ancho fijo
+              height={45} // Define un alto fijo proporcionalmente
+              style={{ borderRadius: "8px", objectFit: "cover" }} // Estilos adicionales
+            />
+            {/* ✅ Hide Menu Button if not logged in */}
+            {session && (
+              <IconButton
+                size="large"
+                edge="start"
+                color="inherit"
+                sx={{ mr: 2 }}
+                onClick={handleClickOpen}
+              >
+                <MenuIcon />
+              </IconButton>
+            )}
+          </Box>
 
           {/* ✅ Display Username - Hide "Bienvenido"/"Hola" if screen width < 600px */}
           {!isMobile && (

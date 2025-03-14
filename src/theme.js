@@ -1,8 +1,12 @@
 "use client";
 import { createTheme } from "@mui/material/styles";
-import "@fontsource/poppins";
+// import "@fontsource/poppins";
 // import '@fontsource/gravitas-one';
-import "@fontsource/montserrat";
+// import "@fontsource/montserrat";
+//import "@fontsource/roboto" //tipografia solicitada en el manual Se usará la tipografía Roboto Condensed - Bold para colocar la información del pago alrededor del QR.
+// import "@fontsource/righteous"; //palabra Codi
+// import "@fontsource/open-sans"; //La tipografía Calibri, se utilizará para títulos, subtítulos, aplicación de textos y para el uso de botones en distintas plataformas.
+
 
 const theme = createTheme({
   palette: {

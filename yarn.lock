@@ -283,10 +283,20 @@
   resolved "https://registry.yarnpkg.com/@fontsource/montserrat/-/montserrat-5.1.1.tgz#25f420893ae1726b375ac921542138c16557966d"
   integrity sha512-myTQCo0XWf5AXc3Pm5GFFTstueYTacE+gpL3G8Vf5ELpr/rBfW+zr7dKLPYXlq2r21HHwfyw6yueKWccWUtKBA==
 
+"@fontsource/open-sans@^5.2.5":
+  version "5.2.5"
+  resolved "https://registry.yarnpkg.com/@fontsource/open-sans/-/open-sans-5.2.5.tgz#7d83383a0ca00e1ae192541273befcbcaf98fbdd"
+  integrity sha512-f0Ww6H+LB6GXA8UCgqs90h4djVttu3quH/1+wkfUY8b09mG1ESn4ACRBHYY78bsoeDXpaCyZh7eoGROBWplvAQ==
+
 "@fontsource/poppins@^5.0.8":
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/@fontsource/poppins/-/poppins-5.1.1.tgz#fe7c25534d2f46bf296c37b68535d419913bc2c4"
   integrity sha512-PQVKHGQOK+UpVNPzTFF9Z9ez3CIDkunfvRXGH95hiDoqWJc1shW4JFqe4tEoqnq7RtZaYrw9aWQq58L4eny5xg==
+
+"@fontsource/righteous@^5.2.5":
+  version "5.2.5"
+  resolved "https://registry.yarnpkg.com/@fontsource/righteous/-/righteous-5.2.5.tgz#66b274f483e6e070013f422caa0f95a424e35459"
+  integrity sha512-2/qtpg5RXBxlxKk8BP5jI0XN/dp6EnXP9eqnhk6CHIM8bLTjYwV/xiiQJCxcWGzRFGMP71Hq8A97qLObcftJEg==
 
 "@humanfs/core@^0.19.1":
   version "0.19.1"
@@ -1711,6 +1721,11 @@ follow-redirects@^1.15.6:
   version "1.15.9"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.9.tgz#a604fa10e443bf98ca94228d9eebcc2e8a2c8ee1"
   integrity sha512-gew4GsXizNgdoRyqmyfMHyAmXsZDk6mHkSxZFCzW9gwlbtOW44CDtYavM+y+72qD/Vq2l550kMF52DT8fOLJqQ==
+
+fontsource-roboto-condensed@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/fontsource-roboto-condensed/-/fontsource-roboto-condensed-4.0.0.tgz#cad749a55aabf3a4dca35964c57d6fbc41bc2547"
+  integrity sha512-ETdONoGr3ioa/yjr6pw77kiXOAUoIec1TpKZIFyEUKJ/eMQEbt+Yi5jONAzGCm1Pe7zxnlXJkQjZ5mhKDSb2BA==
 
 for-each@^0.3.3:
   version "0.3.5"
