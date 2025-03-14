@@ -7,7 +7,7 @@ export default function CoDiText() {
   return (
     <MuiLink
       component={NextLink}
-      href="https://www.codi.org.mx/"
+      href="/"//"https://www.codi.org.mx/"
       target="_blank" // ✅ Opens in a new tab
       rel="noopener noreferrer" // ✅ Security best practice
       underline="none"
