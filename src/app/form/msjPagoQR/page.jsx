@@ -15,7 +15,7 @@ import {
   DialogContent,
   DialogActions,
 } from "@mui/material";
-import { QRCodeCanvas } from "qrcode.react";
+import DynamicQR from "@/components/DynamicQR";
 import { sendMensajePagoQR } from "@/app/actions/sendMensajePagoQR"; // Import server action
 import { useRouter } from "next/navigation"; // ✅ Import useRouter for navigation
 import { mailMensajePagoQR } from "@/app/actions/mailMensajePagoQR"; // ✅ Updated import
@@ -65,43 +65,49 @@ export default function MensajePagoQRForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (emailError) return;
-
+  
     setLoading(true);
     setError(null);
-
+  
     try {
       // ✅ STEP 1: Send the payment data to create the QR
       const qrResponse = await sendMensajePagoQR(formData);
-
+  
       console.log("✅ QR Response:", qrResponse); // Debugging
-
+  
       if (qrResponse.error) {
         throw new Error(qrResponse.error);
       }
-
-      // ✅ STEP 2: Update State and Open Modal
-      setQrData(JSON.stringify(qrResponse, null, 2));
+  
+      // ✅ STEP 2: Ensure `qrResponse` has the expected structure
+      const qrDataFormatted = {
+        mensaje: qrResponse.mensaje || "", // Ensure it exists
+        emisor: qrResponse.emisor || "Desconocido",
+        banco: qrResponse.banco || "Desconocido",
+      };
+  
+      // ✅ STEP 3: Update State and Open Modal
+      setQrData(qrDataFormatted); // Ensure it’s correctly formatted
       setDialogOpen(true);
-
-      // ✅ STEP 3: Send Email with the QR Data
+  
+      // ✅ STEP 4: Send Email with the QR Data
       const emailResponse = await mailMensajePagoQR({
         ...formData,
         qrData: qrResponse, // Pass the QR response to the email function
       });
-
+  
       console.log("✅ Email Response:", emailResponse); // Debugging
-
+  
       if (emailResponse.error) {
         throw new Error(emailResponse.error);
       }
     } catch (err) {
-      console.error("❌ Error:", err.message);
       setError(err.message);
     } finally {
       setLoading(false);
     }
   };
-
+  
   const handleNewMessage = () => {
     setFormData({
       monto: "",
@@ -230,7 +236,22 @@ export default function MensajePagoQRForm() {
           }}
         >
           {/* ✅ Ensure QR Code only renders on the client to prevent hydration issues */}
-          {qrData && <QRCodeCanvas value={qrData || ""} size={248} level="L" />}
+          {qrData && (
+            //<QRCodeCanvas value={qrData || ""} size={248} level="L" />
+            <DynamicQR
+              qrData={JSON.stringify(qrData?.mensaje, null, 2 ) || ""}
+              qrSizeMobile={180}
+              qrSizeDesktop={300}
+              commerceName={qrData?.emisor || "No disponible"}
+              paymentConcept={`${
+                formData?.concepto || "Concepto desconocido"
+              } $${(formData?.monto || 0).toLocaleString("en-US", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })} ${qrData?.banco || "No disponible"}`}
+              footerText="Soportado por CoDi®"
+            />
+          )}
         </DialogContent>
         <DialogActions>
           <Box

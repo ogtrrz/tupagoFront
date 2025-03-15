@@ -41,8 +41,8 @@ export default function RootLayout({ children }) {
                 {children}
               </main>
               <MyFooter />
-              <Analytics />
-              <SpeedInsights /> 
+              {/* <Analytics />
+              <SpeedInsights />  */}
             </body>
           </SessionProviderWrapper>
         </ThemeProvider>

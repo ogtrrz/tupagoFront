@@ -33,10 +33,10 @@ export async function sendMensajePagoQR(formData) {
 
     // ✅ Return the actual API response
     const responseData = await response.json();
-    // console.log("✅ Payment Response:", responseData);
+    console.log("✅ Payment Response:", responseData);
     return responseData;
   } catch (error) {
-    console.error("❌ Error in sendMensajePagoQR:", error.message);
+    console.log("❌ Error in sendMensajePagoQR:", error.message);
     return { error: error.message };
   }
 }

@@ -18,8 +18,7 @@ import PriceCheckSharpIcon from "@mui/icons-material/PriceCheckSharp";
 import DoNotDisturbAltSharpIcon from "@mui/icons-material/DoNotDisturbAltSharp";
 import WatchLaterSharpIcon from "@mui/icons-material/WatchLaterSharp";
 import CoffeeSharpIcon from "@mui/icons-material/CoffeeSharp";
-
-import { QRCodeCanvas } from "qrcode.react";
+import DynamicQR from "@/components/DynamicQR";
 import { requestEstatusQR } from "@/app/actions/requestEstatusQR";
 import { requestEstatusCobroTelefonico } from "@/app/actions/requestEstatusCobroTelefonico";
 import { fetchMensajeById } from "@/app/actions/fetchMensajesById";
@@ -68,7 +67,7 @@ export default function MensajePage({ params }) {
   if (error) {
     return <Typography color="error">Error: {error}</Typography>;
   }
-  // console.log("mensaje", data);
+  console.log("mensaje", data);
   const hasCelular = data.numeroCelular && data.numeroCelular.trim() !== "";
   const hasExtra6Data = data.extra6 && data.extra6.trim() !== "";
 
@@ -145,9 +144,20 @@ export default function MensajePage({ params }) {
             </Typography>
 
             {!hasCelular && (
-              <Box display="flex" justifyContent="center" mt={2}>
-                <QRCodeCanvas value={data.extra3 || ""} size={248} level="L" />
-              </Box>
+              <DynamicQR
+                qrData={data.extra3 || ""}
+                qrSizeMobile={180}
+                qrSizeDesktop={300}
+                commerceName={data?.cliente?.nombre}
+                paymentConcept={`${data?.concepto} $${data.monto.toLocaleString(
+                  "en-US",
+                  {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  }
+                )} ${data?.cliente?.extra1}`}
+                footerText="Soportado por CoDi®"
+              />
             )}
 
             {/* ✅ CallbacksList is only shown if extra6 has data */}
@@ -159,7 +169,7 @@ export default function MensajePage({ params }) {
 
             {/* ✅ Button with Loading Indicator */}
             <Button
-              variant="contained"
+              variant="outlined"
               color="primary"
               onClick={handleSolicitarEstatus}
               disabled={loading}

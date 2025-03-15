@@ -8,7 +8,7 @@ export async function fetchMensajeById(id) {
     // Get authentication session
     const session = await getServerSession(authOptions);
     if (!session || !session.accessToken) {
-      throw new Error("AUTH_REQUIRED"); 
+      throw new Error("AUTH_REQUIRED");
     }
 
     // Make the API request
@@ -23,7 +23,7 @@ export async function fetchMensajeById(id) {
 
     if (res.status === 401) {
       console.warn("🔴 Unauthorized (401).");
-      throw new Error("AUTH_REQUIRED"); 
+      throw new Error("AUTH_REQUIRED");
     }
 
     if (!res.ok) {
@@ -31,6 +31,8 @@ export async function fetchMensajeById(id) {
     }
 
     const data = await res.json();
+    console.log("data", data);
+
     return data; // Return the fetched message
   } catch (error) {
     console.error("❌ Error fetching mensaje:", error);
