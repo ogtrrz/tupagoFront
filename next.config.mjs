@@ -9,7 +9,7 @@ const nextConfig = {
   
 	images: {
 	  remotePatterns: [
-		{ protocol: "https", hostname: "tupago.click" },
+		{ protocol: "https", hostname: "kashbit.bond" },
 		{ protocol: "http", hostname: "localhost" },
 	  ],
 	  formats: ["image/avif", "image/webp"], 

@@ -7,7 +7,7 @@ import html2canvas from "html2canvas";
 import "@fontsource/roboto-condensed";
 
 export default function DynamicQR({
-  qrData = "https://tupago.click", // ✅ Default QR data
+  qrData = "https://KashBit.bond", // ✅ Default QR data
   qrSizeMobile = 248, // ✅ Default mobile size
   qrSizeDesktop = 248, // ✅ Default desktop size
   commerceName = "NOMBRE DEL COMERCIO", // ✅ Customizable Commerce Name
@@ -76,7 +76,7 @@ export default function DynamicQR({
             {footerText}
           </Typography>
           <Typography variant="body2" align="center" mt={1} >
-            Generado por https://TuPago.click
+            Generado por https://KashBit.bond
           </Typography>
         </CardContent>
       </Card>

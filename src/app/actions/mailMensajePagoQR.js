@@ -65,7 +65,7 @@ export async function mailMensajePagoQR(formData) {
 
     // ✅ 6. Send the email with the attached QR code
     const mailOptions = {
-      from: `"TuPago.click" <${process.env.SMTP_USER}>`,
+      from: `"KashBit.bond" <${process.env.SMTP_USER}>`,
       to: email,
       subject: "Confirmación de Pago QR",
       html: emailHtml, // ✅ Email content

@@ -93,7 +93,7 @@ const MyFooter = () => {
             }}
           >
             <GitHubIcon />
-            <Typography variant="body2">TuPago.click GitHub.</Typography>
+            <Typography variant="body2">KashBit.bond GitHub.</Typography>
             <ArrowForwardIcon />
           </Stack>
           <Stack
@@ -127,7 +127,7 @@ const MyFooter = () => {
             <ArrowForwardIcon />
           </Stack>
           <br />
-          <Typography variant="body2">© 2025 TuPago.click.</Typography>
+          <Typography variant="body2">© 2025 KashBit.bond.</Typography>
         </Grid>
       </Grid>
       <Box component="section" sx={{ p: 2 }}>

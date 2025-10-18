@@ -12,10 +12,10 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from '@vercel/speed-insights/next';
 
 export const metadata = {
-  title: "TuPago.click, CoDi pagos gratuitos.",
+  title: "KashBit.bond, CoDi pagos gratuitos.",
   description:
     // TODO corregir
-    "TuPago.click, CoDi pagos gratuitos. bla bla bla ...",
+    "KashBit.bond, CoDi pagos gratuitos. bla bla bla ...",
 };
 
 // A separate export for viewport
@@ -41,8 +41,8 @@ export default function RootLayout({ children }) {
                 {children}
               </main>
               <MyFooter />
-              <Analytics />
-              <SpeedInsights /> 
+              {/* <Analytics />
+              <SpeedInsights />  */}
             </body>
           </SessionProviderWrapper>
         </ThemeProvider>

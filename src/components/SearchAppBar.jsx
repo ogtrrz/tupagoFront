@@ -102,7 +102,7 @@ export default function SearchAppBar() {
           <Box display="flex" alignItems="center" gap={2}>
             <Image
               src="/codi.webp"
-              alt="Codi TuPago.click"
+              alt="Codi KashBit.bond"
               width={45} // Define un ancho fijo
               height={45} // Define un alto fijo proporcionalmente
               style={{ borderRadius: "8px", objectFit: "cover" }} // Estilos adicionales

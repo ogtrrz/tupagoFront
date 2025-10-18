@@ -21,10 +21,10 @@ export default function HomePage() {
               <span style={{ fontFamily: "Righteous, sans-serif" }}>
                 CoDi®, CoDi Cobro Digital®
               </span>{" "}
-              y TuPago.click!
+              y KashBit.bond!
             </Typography>
           }
-          altText="TuPago.click, Codi"
+          altText="KashBit.bond, Codi"
         />
       </Box>
 
@@ -32,7 +32,7 @@ export default function HomePage() {
       <Container maxWidth="lg" sx={{ mt: { xs: 4, md: 8 } }}>
         <Typography variant="h6">
           Olvídate del efectivo y de las comisiones por cobrar. Con{" "}
-          <strong>TuPago.click</strong>, un tercero autorizado por Banco de
+          <strong>KashBit.bond</strong>, un tercero autorizado por Banco de
           México (Banxico), puedes generar mensajes de cobro{" "}
           <span style={{ fontFamily: "Righteous, sans-serif" }}>
             CoDi®, CoDi Cobro Digital®
@@ -107,7 +107,7 @@ export default function HomePage() {
 
         <Typography variant="h5" paragraph>
           Olvídate del efectivo y de las comisiones por cobrar. Con{" "}
-          <strong>TuPago.click</strong>, un tercero autorizado por Banco de
+          <strong>KashBit.bond</strong>, un tercero autorizado por Banco de
           México (Banxico), puedes generar mensajes de cobro{" "}
           <span style={{ fontFamily: "Righteous, sans-serif" }}>
             CoDi®, CoDi Cobro Digital®
@@ -191,11 +191,11 @@ export default function HomePage() {
         {[
           {
             title: "Implementación sencilla:",
-            text: "Genera códigos QR de cobro en segundos desde tu celular o computadora con la plataforma de TuPago.click. No requieres equipo especial ni procesos complejos.",
+            text: "Genera códigos QR de cobro en segundos desde tu celular o computadora con la plataforma de KashBit.bond. No requieres equipo especial ni procesos complejos.",
           },
           {
             title: "Ahorro en costos:",
-            text: "Olvídate de rentar costosas terminales punto de venta o de pagar comisiones por cada venta. CoDi a través de Tupago.click no tiene costos por transacción, lo que maximiza tus ganancias.",
+            text: "Olvídate de rentar costosas terminales punto de venta o de pagar comisiones por cada venta. CoDi a través de KashBit.bond no tiene costos por transacción, lo que maximiza tus ganancias.",
           },
           {
             title: "Liquidez inmediata:",
@@ -223,11 +223,11 @@ export default function HomePage() {
         {[
           {
             title: "Integración a sistemas existentes:",
-            text: "Tupago.click ofrece APIs y soluciones personalizables para integrar CoDi en tus plataformas de venta (POS, e-commerce, apps internas) sin tener que reinventar tus procesos. La adopción de CoDi puede formar parte de tu flujo de cobro actual con mínima fricción.",
+            text: "KashBit.bond ofrece APIs y soluciones personalizables para integrar CoDi en tus plataformas de venta (POS, e-commerce, apps internas) sin tener que reinventar tus procesos. La adopción de CoDi puede formar parte de tu flujo de cobro actual con mínima fricción.",
           },
           {
             title: "Escalable y robusto",
-            text: "La plataforma está preparada para manejar un alto volumen de transacciones simultáneas. Ya sea que recibas cientos o miles de pagos al día, CoDi con Tupago.click escala a la medida de tu empresa sin perder velocidad ni seguridad.",
+            text: "La plataforma está preparada para manejar un alto volumen de transacciones simultáneas. Ya sea que recibas cientos o miles de pagos al día, CoDi con KashBit.bond escala a la medida de tu empresa sin perder velocidad ni seguridad.",
           },
           {
             title: "Conciliación sencilla:",
@@ -235,11 +235,11 @@ export default function HomePage() {
           },
           {
             title: "Seguridad y cumplimiento:",
-            text: " Al estar certificado por Banxico, Tupago.click garantiza que los cobros cumplen con todos los protocolos de seguridad. La información viaja encriptada y los fondos se mueven de banco a banco directamente, reduciendo riesgos de fraude.",
+            text: " Al estar certificado por Banxico, KashBit.bond garantiza que los cobros cumplen con todos los protocolos de seguridad. La información viaja encriptada y los fondos se mueven de banco a banco directamente, reduciendo riesgos de fraude.",
           },
           {
             title: "Soporte especializado:",
-            text: "Cuenta con el apoyo del equipo de Tupago.click en la implementación y monitoreo de CoDi. Te acompañamos con capacitación y soporte técnico para que todo funcione a la perfección, asegurando una transición suave hacia los pagos digitales.",
+            text: "Cuenta con el apoyo del equipo de KashBit.bond en la implementación y monitoreo de CoDi. Te acompañamos con capacitación y soporte técnico para que todo funcione a la perfección, asegurando una transición suave hacia los pagos digitales.",
           },
         ].map((benefit, index) => (
           <Typography variant="h6" paragraph key={index}>
@@ -255,7 +255,7 @@ export default function HomePage() {
         {[
           {
             title: "Generación del cobro:",
-            text: "Tu negocio genera un mensaje de cobro a través de TuPago.click, mostrando un código QR en tu pantalla.",
+            text: "Tu negocio genera un mensaje de cobro a través de KashBit.bond, mostrando un código QR en tu pantalla.",
           },
           {
             title: "Notificación al cliente:",
@@ -273,7 +273,7 @@ export default function HomePage() {
           <span style={{ fontFamily: "Righteous, sans-serif" }}>
             CoDi®, CoDi Cobro Digital®
           </span>{" "}
-          con <strong>TuPago.click</strong> hoy!
+          con <strong>KashBit.bond</strong> hoy!
         </Typography>
 
         <Grid container spacing={3} sx={{ mt: { xs: 4, md: 4 } }}>

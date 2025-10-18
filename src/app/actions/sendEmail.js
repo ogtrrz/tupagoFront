@@ -15,7 +15,7 @@ export async function sendEmail(to, subject, message) {
     });
 
     const mailOptions = {
-      from: `"Tupago.click" <${process.env.SMTP_USER}>`,
+      from: `"KashBit.bond" <${process.env.SMTP_USER}>`,
       to,
       subject,
       text: message,

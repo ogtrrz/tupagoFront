@@ -55,7 +55,7 @@ export default function MyHeaderPrincipal({ imageURL, label }) {
       >
         <Typography variant="h4" align="left" color="white">
           {label ||
-            "TuPago.click, pagos fáciles y gratuitos, remotos o presentes, ES TODO"}
+            "KashBit.bond, pagos fáciles y gratuitos, remotos o presentes, ES TODO"}
         </Typography>
       </Box>
     </Box>
