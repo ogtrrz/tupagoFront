@@ -27,7 +27,7 @@
     "fontsource-roboto-condensed": "^4.0.0",
     "html2canvas": "^1.4.1",
     "next": "15.1.7",
-    "next-auth": "^4.24.11",
+    "next-auth": "^4.24.12",
     "nodemailer": "^6.10.0",
     "qrcode": "^1.5.4",
     "qrcode.react": "^4.2.0",
